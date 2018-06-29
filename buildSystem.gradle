@@ -1,0 +1,9 @@
+ext{
+    androidBuildToolsVersion = "27.0.3"
+    androidMinSdkVersion = 16
+    androidTargetSdkVersion = 22
+    androidCompileSdkVersion = 27
+    androidSupportVersion = "27.1.1"
+
+    androidSupportAppcompatV7 = "com.android.support:appcompat-v7:${androidSupportVersion}"
+}
