@@ -4,6 +4,7 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 
 import com.wiesen.libgl.factory.GLEngine;
+import com.wiesen.libgl.utils.FpsUtils;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -33,6 +34,9 @@ public class GLRender implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {
+        if (GLEngine.isFPSOpen()){
+            FpsUtils.count(GLEngine.getGlEngine().getFpsListener());
+        }
 
     }
 

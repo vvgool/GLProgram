@@ -2,6 +2,8 @@ package com.wiesen.libgl.factory;
 
 import android.app.Application;
 
+import com.wiesen.libgl.data.FpsListener;
+import com.wiesen.libgl.utils.FpsUtils;
 import com.wiesen.libgl.utils.MatrixState;
 import com.wiesen.libgl.view.GlViewPort;
 
@@ -14,6 +16,8 @@ public class GLEngine {
     private static Application context;
     private MatrixState matrixState = new MatrixState();
     private GlViewPort viewPort = new GlViewPort();
+    private boolean openFPS = false;
+    private FpsListener fpsListener;
 
     public static void init(Application application){
         context = application;
@@ -22,6 +26,22 @@ public class GLEngine {
 
     public static Application getAppContext() {
         return context;
+    }
+
+    public static void openFPS(boolean state){
+        getGlEngine().openFPS = state;
+    }
+
+    public static boolean isFPSOpen(){
+        return getGlEngine().openFPS;
+    }
+
+    public FpsListener getFpsListener() {
+        return fpsListener;
+    }
+
+    public static void registerFps(FpsListener listener){
+        getGlEngine().fpsListener = listener;
     }
 
     public static void viewPort(float width, float height){

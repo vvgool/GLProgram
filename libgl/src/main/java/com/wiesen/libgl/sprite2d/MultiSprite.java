@@ -15,7 +15,7 @@ import java.nio.ShortBuffer;
  * created by wiesen
  * time : 2018/6/29
  */
-public class MuilteSprite extends GlNode {
+public class MultiSprite extends GlNode {
 
     private int mProgram;
     private int muMVPMatrixHandler;
@@ -36,13 +36,13 @@ public class MuilteSprite extends GlNode {
             GLES20.GL_TEXTURE5, GLES20.GL_TEXTURE6, GLES20.GL_TEXTURE7, GLES20.GL_TEXTURE8, GLES20.GL_TEXTURE9
     };
 
-    private int[] mTexHandlerArray = new int[10];
+    private int[] mTexHandlerArray;
 
-    public MuilteSprite() {
+    public MultiSprite() {
         super();
     }
 
-    public MuilteSprite(boolean needAlpha){
+    public MultiSprite(boolean needAlpha){
         super();
         this.needAlpha = needAlpha;
     }
@@ -55,6 +55,7 @@ public class MuilteSprite extends GlNode {
         maPositionHandler = GLES20.glGetAttribLocation(mProgram, "aPosition");
         maTextureCoordHandler = GLES20.glGetAttribLocation(mProgram, "aTextureCoord");
 
+        mTexHandlerArray = new int[8];
         for (int i = 0; i <= 7; i++) {
             mTexHandlerArray[i] = GLES20.glGetUniformLocation(mProgram, "usTexture" + i);
         }
@@ -108,6 +109,24 @@ public class MuilteSprite extends GlNode {
         setIndex(indices);
     }
 
+    public void setDefaultTextcood(){
+        float[] textureArray = getTextureArray();
+        for (int i = 0; i < textureArray.length ; i += 8) {
+            textureArray[i] = 0;
+            textureArray[i + 1] = 0;
+
+            textureArray[i + 2] = 0;
+            textureArray[i + 3] = 1;
+
+            textureArray[i + 4] = 1;
+            textureArray[i + 5] = 1;
+
+            textureArray[i + 6] = 1;
+            textureArray[i + 7] = 0;
+        }
+        refreshTextureBuffer();
+    }
+
     public void setIndex(short[] shorts) {
         indexBuffer.clear();
         indexBuffer.put(shorts);
@@ -151,7 +170,9 @@ public class MuilteSprite extends GlNode {
     private void actTexture(GLTexture[] glTextures) {
         for (int i = 0; i < glTextures.length; i++) {
             GLES20.glActiveTexture(mGLTexUnitArray[i]);
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, glTextures[i].getTextureId());
+            int textureId = 0;
+            if (glTextures[i] != null) textureId = glTextures[i].getTextureId();
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
             GLES20.glUniform1i(mTexHandlerArray[i], i);
         }
     }

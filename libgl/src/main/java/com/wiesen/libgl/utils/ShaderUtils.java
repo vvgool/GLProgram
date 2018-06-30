@@ -29,8 +29,8 @@ public class ShaderUtils {
             int[] linkStatus = new int[1];
             GLES20.glGetProgramiv(program, GLES20.GL_LINK_STATUS, linkStatus, 0);
             if (linkStatus[0] == 0){
-                LogUtil.e(TAG, "Could not link program : ");
-                LogUtil.e(TAG, GLES20.glGetProgramInfoLog(program));
+                LogUtils.e(TAG, "Could not link program : ");
+                LogUtils.e(TAG, GLES20.glGetProgramInfoLog(program));
                 GLES20.glDeleteProgram(program);
                 program = 0;
             }
@@ -53,8 +53,8 @@ public class ShaderUtils {
             int[] compiled = new int[1];
             GLES20.glGetShaderiv(shader, GLES20.GL_COMPILE_STATUS, compiled, 0);
             if (compiled[0] == 0){
-                LogUtil.e(TAG, "Could not compile shader" + shaderType + ":");
-                LogUtil.e(TAG, GLES20.glGetShaderInfoLog(shader));
+                LogUtils.e(TAG, "Could not compile shader" + shaderType + ":");
+                LogUtils.e(TAG, GLES20.glGetShaderInfoLog(shader));
                 GLES20.glDeleteShader(shader);
                 shader = 0;
             }
@@ -65,7 +65,7 @@ public class ShaderUtils {
     private static void checkGlError(String op){
         int error;
         while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR){
-            LogUtil.e(TAG, op + ": glError " + error);
+            LogUtils.e(TAG, op + ": glError " + error);
             throw new RuntimeException(op + ": glError " + error );
         }
     }

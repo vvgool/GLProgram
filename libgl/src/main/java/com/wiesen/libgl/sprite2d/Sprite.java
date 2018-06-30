@@ -102,6 +102,24 @@ public class Sprite extends GlNode {
         indexBuffer.position(0);
     }
 
+    public void setDefaultTextcood(){
+        float[] textureArray = getTextureArray();
+        for (int i = 0; i < textureArray.length ; i += 8) {
+            textureArray[i] = 0;
+            textureArray[i + 1] = 0;
+
+            textureArray[i + 2] = 0;
+            textureArray[i + 3] = 1;
+
+            textureArray[i + 4] = 1;
+            textureArray[i + 5] = 1;
+
+            textureArray[i + 6] = 1;
+            textureArray[i + 7] = 0;
+        }
+        refreshTextureBuffer();
+    }
+
 
     @Override
     public void refreshVertexBuffer() {

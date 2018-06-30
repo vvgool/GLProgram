@@ -30,6 +30,10 @@ public class TextureLoader {
             return resTextures.get(resId);
         }
         Bitmap bitmap = BitmapFactory.decodeResource(GLEngine.getAppContext().getResources(), resId);
+        if (bitmap == null) {
+            bitmap = Bitmap.createBitmap(2, 2, Bitmap.Config.ARGB_8888);
+            resId = 0;
+        }
         GLTexture glTexture = TextureUtils.iniTexture(bitmap);
         resTextures.put(resId, glTexture);
         return glTexture;
@@ -42,6 +46,10 @@ public class TextureLoader {
             return resFormatTextures.get(resId);
         }
         Bitmap bitmap = BitmapFactory.decodeResource(GLEngine.getAppContext().getResources(), resId);
+        if (bitmap == null) {
+            bitmap = Bitmap.createBitmap(2, 2, Bitmap.Config.ARGB_8888);
+            resId = 0;
+        }
         GLTexture glTexture = TextureUtils.initGlTexture(bitmap, format, minFilter, magFilter, uWrap, vWrap);
         resFormatTextures.put(resId, glTexture);
         return glTexture;
