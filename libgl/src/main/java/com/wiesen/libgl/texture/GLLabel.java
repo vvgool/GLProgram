@@ -42,10 +42,16 @@ public class GLLabel {
         return this;
     }
 
+    public GLLabel setStokeWidth(float size){
+        paint.setStrokeWidth(size);
+        return this;
+    }
+
 
     public Bitmap buildBitmap(){
         paint.setTextSize(textSize);
         paint.setColor(textColor);
+        paint.setAntiAlias(true);
         int bitmapWidth = (int) Math.ceil(paint.measureText(text));
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
         int bitmapHeight = (int) Math.ceil(fontMetrics.bottom - fontMetrics.top);

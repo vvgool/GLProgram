@@ -166,6 +166,25 @@ public class MultiSprite extends GlNode {
         GLES20.glDrawElements(GLES20.GL_TRIANGLES, iCount, GLES20.GL_UNSIGNED_SHORT, indexBuffer);
     }
 
+    public void drawSelf(int[] textureIds){
+        GLES20.glUseProgram(mProgram);
+        GLES20.glUniformMatrix4fv(muMVPMatrixHandler, 1, false, GLEngine.getMatrixState().getFinalMatrix(), 0);
+
+        GLES20.glVertexAttribPointer(maPositionHandler, 3, GLES20.GL_FLOAT, false, 3 * 4, vertexBuffer);
+        GLES20.glVertexAttribPointer(maTextureCoordHandler, 2, GLES20.GL_FLOAT, false, 2 * 4, textureBuffer);
+        GLES20.glEnableVertexAttribArray(maPositionHandler);
+        GLES20.glEnableVertexAttribArray(maTextureCoordHandler);
+
+        actTexture(textureIds);
+        GLES20.glDrawElements(GLES20.GL_TRIANGLES, iCount, GLES20.GL_UNSIGNED_SHORT, indexBuffer);
+    }
+    private void actTexture(int[] textureIds) {
+        for (int i = 0; i < textureIds.length; i++) {
+            GLES20.glActiveTexture(mGLTexUnitArray[i]);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureIds[i]);
+            GLES20.glUniform1i(mTexHandlerArray[i], i);
+        }
+    }
 
     private void actTexture(GLTexture[] glTextures) {
         for (int i = 0; i < glTextures.length; i++) {
@@ -176,4 +195,6 @@ public class MultiSprite extends GlNode {
             GLES20.glUniform1i(mTexHandlerArray[i], i);
         }
     }
+
+
 }

@@ -140,6 +140,10 @@ public class Sprite extends GlNode {
     }
 
     public void drawSelf(GLTexture texture) {
+        drawSelf(texture.getTextureId());
+    }
+
+    public void drawSelf(int textureId) {
         GLES20.glUseProgram(mProgram);
         GLES20.glUniformMatrix4fv(muMVPMatrixHandler, 1, false, GLEngine.getMatrixState().getFinalMatrix(), 0);
         GLES20.glVertexAttribPointer(maPositionHandler, 3, GLES20.GL_FLOAT, false, 3 * 4, vertexBuffer);
@@ -147,7 +151,7 @@ public class Sprite extends GlNode {
         GLES20.glEnableVertexAttribArray(maPositionHandler);
         GLES20.glEnableVertexAttribArray(maTextureCoordHandler);
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture.getTextureId());
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
         GLES20.glDrawElements(GLES20.GL_TRIANGLES, iCount, GLES20.GL_UNSIGNED_SHORT, indexBuffer);
     }
 
