@@ -4,7 +4,6 @@ import android.graphics.PointF;
 import android.text.TextUtils;
 
 
-import com.wiesen.libgl.utils.PosUtils;
 import com.wiesen.libgl.utils.TextureUtils;
 
 import java.util.ArrayList;
@@ -267,8 +266,8 @@ public  class ParticleSystem{
         PointF p2 = new PointF(particleData.startPosX, particleData.startPosY);
         p2.x = startPoint.x - p2.x;
         p2.y = startPoint.y - p2.y;
-        float x = PosUtils.toGlSize(particleData.posx - p2.x + startPoint.x);
-        float y = PosUtils.toGlSize(particleData.posy - p2.y + startPoint.y);
+        float x = particleSprite.glEngine().getPosUtils().toGlSize(particleData.posx - p2.x + startPoint.x);
+        float y = particleSprite.glEngine().getPosUtils().toGlSize(particleData.posy - p2.y + startPoint.y);
 
         double dis = Math.sqrt(x * x + y * y);
         double tempAngle = Math.atan2(y , x);

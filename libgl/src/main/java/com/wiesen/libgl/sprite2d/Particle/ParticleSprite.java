@@ -32,8 +32,8 @@ public class ParticleSprite extends GlNode{
     private int iCount;
 
 
-    public ParticleSprite() {
-        super();
+    public ParticleSprite(GLEngine glEngine) {
+        super(glEngine);
     }
 
 
@@ -74,6 +74,25 @@ public class ParticleSprite extends GlNode{
 
         }
         textureBuffer = BufferUtil.covertBuffer(textureArray);
+    }
+
+    @Override
+    public void setDefaultTextureCood() {
+        float[] textureArray = getTextureArray();
+        for (int i = 0; i < textureArray.length ; i += 8) {
+            textureArray[i] = 0;
+            textureArray[i + 1] = 0;
+
+            textureArray[i + 2] = 0;
+            textureArray[i + 3] = 1;
+
+            textureArray[i + 4] = 1;
+            textureArray[i + 5] = 1;
+
+            textureArray[i + 6] = 1;
+            textureArray[i + 7] = 0;
+        }
+        refreshTextureBuffer();
     }
 
     private void initIndex(int count){
@@ -160,7 +179,7 @@ public class ParticleSprite extends GlNode{
     public void draw(int textureId){
         if (!isAvailable()) return;
         GLES20.glUseProgram(mProgramId);
-        GLES20.glUniformMatrix4fv(mMatrixHandler, 1, false, GLEngine.getMatrixState().getFinalMatrix(), 0);
+        GLES20.glUniformMatrix4fv(mMatrixHandler, 1, false, glEngine().getMatrixState().getFinalMatrix(), 0);
         GLES20.glVertexAttribPointer(mPositionHandler, 3, GLES20.GL_FLOAT, false, 3 * 4, vertexBuffer);
         GLES20.glVertexAttribPointer(mTextureHandler, 2, GLES20.GL_FLOAT, false, 2 * 4, textureBuffer);
         GLES20.glVertexAttribPointer(mColorHandler, 4, GLES20.GL_FLOAT, false, 4 * 4, colorBuffer);

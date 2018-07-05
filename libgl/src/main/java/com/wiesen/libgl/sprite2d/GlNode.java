@@ -1,12 +1,16 @@
 package com.wiesen.libgl.sprite2d;
 
+import com.wiesen.libgl.factory.GLEngine;
+
 /**
  * created by wiesen
  * time : 2018/6/29
  */
 public abstract class GlNode {
+    private GLEngine glEngine;
 
-    public GlNode() {
+    public GlNode(GLEngine glEngine) {
+        this.glEngine = glEngine;
         initShader();
     }
 
@@ -22,5 +26,11 @@ public abstract class GlNode {
     public abstract void refreshTextureBuffer();
 
     public abstract void refreshVertexBuffer();
+
+    public abstract void setDefaultTextureCood();
+
+    public GLEngine glEngine(){
+        return glEngine;
+    }
 
 }

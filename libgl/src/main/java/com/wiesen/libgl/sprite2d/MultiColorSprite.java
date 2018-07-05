@@ -13,14 +13,15 @@ import java.nio.ShortBuffer;
 
 /**
  * created by wiesen
- * time : 2018/6/29
+ * time : 2018/7/4
  */
-public class MultiSprite extends GlNode {
+public class MultiColorSprite extends GlNode {
 
     private int mProgram;
     private int muMVPMatrixHandler;
     private int maPositionHandler;
     private int maTextureCoordHandler;
+    private int maColorHandler;
 
     private int mSpriteCount;
     private int iCount;//索引个数
@@ -29,7 +30,8 @@ public class MultiSprite extends GlNode {
     private FloatBuffer vertexBuffer;
     private float[] vertexArray;
     private ShortBuffer indexBuffer;
-    private boolean needAlpha = false;
+
+    private FloatBuffer colorBuffer;
 
     private int[] mGLTexUnitArray = new int[]{
             GLES20.GL_TEXTURE0, GLES20.GL_TEXTURE1, GLES20.GL_TEXTURE2, GLES20.GL_TEXTURE3, GLES20.GL_TEXTURE4,
@@ -38,22 +40,18 @@ public class MultiSprite extends GlNode {
 
     private int[] mTexHandlerArray;
 
-    public MultiSprite(GLEngine glEngine) {
+    public MultiColorSprite(GLEngine glEngine) {
         super(glEngine);
-    }
-
-    public MultiSprite(GLEngine glEngine, boolean needAlpha){
-        super(glEngine);
-        this.needAlpha = needAlpha;
     }
 
     @Override
     public void initShader() {
-        mProgram = ProgramLoader.loadProgramFromAsset(ShaderContacts.MULTI_SPRITE_VERTEX,
-                !needAlpha ? ShaderContacts.MULTI_SPRITE_FRAG : ShaderContacts.MULTI_SPRITE_ALPHA_FRAG);
+        mProgram = ProgramLoader.loadProgramFromAsset(ShaderContacts.MULTI_COLOR_SPRITE_VERTEX,
+                ShaderContacts.MULTI_COLOR_SPRITE_FRAG);
         muMVPMatrixHandler = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
         maPositionHandler = GLES20.glGetAttribLocation(mProgram, "aPosition");
         maTextureCoordHandler = GLES20.glGetAttribLocation(mProgram, "aTextureCoord");
+        maColorHandler = GLES20.glGetUniformLocation(mProgram, "aColor");
 
         mTexHandlerArray = new int[8];
         for (int i = 0; i <= 7; i++) {
@@ -83,6 +81,15 @@ public class MultiSprite extends GlNode {
         textureBuffer = BufferUtil.covertBuffer(textureArray);
     }
 
+    public void setMixColor(float r, float g, float b, float a){
+        float[] color = new float[4];
+        color[0] = r;
+        color[1] = g;
+        color[2] = b;
+        color[3] = a;
+        colorBuffer = BufferUtil.covertBuffer(color);
+    }
+
     @Override
     public float[] getVertexArray() {
         return vertexArray;
@@ -109,7 +116,12 @@ public class MultiSprite extends GlNode {
         setIndex(indices);
     }
 
-    @Override
+    public void setIndex(short[] shorts) {
+        indexBuffer.clear();
+        indexBuffer.put(shorts);
+        indexBuffer.position(0);
+    }
+
     public void setDefaultTextureCood(){
         float[] textureArray = getTextureArray();
         for (int i = 0; i < textureArray.length ; i += 8) {
@@ -126,12 +138,6 @@ public class MultiSprite extends GlNode {
             textureArray[i + 7] = 0;
         }
         refreshTextureBuffer();
-    }
-
-    public void setIndex(short[] shorts) {
-        indexBuffer.clear();
-        indexBuffer.put(shorts);
-        indexBuffer.position(0);
     }
 
 
@@ -157,6 +163,7 @@ public class MultiSprite extends GlNode {
     public void drawSelf(GLTexture[] glTextures) {
         GLES20.glUseProgram(mProgram);
         GLES20.glUniformMatrix4fv(muMVPMatrixHandler, 1, false, glEngine().getMatrixState().getFinalMatrix(), 0);
+        if (colorBuffer != null) GLES20.glUniform4fv(maColorHandler, 1, colorBuffer);
 
         GLES20.glVertexAttribPointer(maPositionHandler, 3, GLES20.GL_FLOAT, false, 3 * 4, vertexBuffer);
         GLES20.glVertexAttribPointer(maTextureCoordHandler, 2, GLES20.GL_FLOAT, false, 2 * 4, textureBuffer);
@@ -170,6 +177,7 @@ public class MultiSprite extends GlNode {
     public void drawSelf(int[] textureIds){
         GLES20.glUseProgram(mProgram);
         GLES20.glUniformMatrix4fv(muMVPMatrixHandler, 1, false, glEngine().getMatrixState().getFinalMatrix(), 0);
+        if (colorBuffer != null) GLES20.glUniform4fv(maColorHandler, 1, colorBuffer);
 
         GLES20.glVertexAttribPointer(maPositionHandler, 3, GLES20.GL_FLOAT, false, 3 * 4, vertexBuffer);
         GLES20.glVertexAttribPointer(maTextureCoordHandler, 2, GLES20.GL_FLOAT, false, 2 * 4, textureBuffer);
@@ -196,6 +204,4 @@ public class MultiSprite extends GlNode {
             GLES20.glUniform1i(mTexHandlerArray[i], i);
         }
     }
-
-
 }

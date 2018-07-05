@@ -30,12 +30,12 @@ public class Sprite extends GlNode {
     private ShortBuffer indexBuffer;
     private boolean needAlpha = false;
 
-    public Sprite() {
-        super();
+    public Sprite(GLEngine glEngine) {
+        super(glEngine);
     }
 
-    public Sprite(boolean needAlpha) {
-        super();
+    public Sprite(GLEngine glEngine, boolean needAlpha) {
+        super(glEngine);
         this.needAlpha = needAlpha;
     }
 
@@ -102,7 +102,8 @@ public class Sprite extends GlNode {
         indexBuffer.position(0);
     }
 
-    public void setDefaultTextcood(){
+    @Override
+    public void setDefaultTextureCood(){
         float[] textureArray = getTextureArray();
         for (int i = 0; i < textureArray.length ; i += 8) {
             textureArray[i] = 0;
@@ -145,7 +146,7 @@ public class Sprite extends GlNode {
 
     public void drawSelf(int textureId) {
         GLES20.glUseProgram(mProgram);
-        GLES20.glUniformMatrix4fv(muMVPMatrixHandler, 1, false, GLEngine.getMatrixState().getFinalMatrix(), 0);
+        GLES20.glUniformMatrix4fv(muMVPMatrixHandler, 1, false, glEngine().getMatrixState().getFinalMatrix(), 0);
         GLES20.glVertexAttribPointer(maPositionHandler, 3, GLES20.GL_FLOAT, false, 3 * 4, vertexBuffer);
         GLES20.glVertexAttribPointer(maTextureCoordHandler, 2, GLES20.GL_FLOAT, false, 2 * 4, textureBuffer);
         GLES20.glEnableVertexAttribArray(maPositionHandler);

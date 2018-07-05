@@ -16,4 +16,7 @@ public interface ShaderContacts {
 
     String PARTICLE_SPRITE_VERTEX = "2d/particle_color_vertex.glsl";
     String PARTICLE_SPRITE_FRAG = "2d/particle_color_frag.glsl";
+
+    String MULTI_COLOR_SPRITE_VERTEX = "2d/multi_sprite_color_vertex.glsl";
+    String MULTI_COLOR_SPRITE_FRAG = "2d/multi_sprite_color_frag.glsl";
 }

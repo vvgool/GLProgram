@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.opengl.GLES20;
 
 import com.wiesen.libgl.factory.GLEngine;
+import com.wiesen.libgl.factory.GLEngineFactory;
 import com.wiesen.libgl.utils.ShaderUtils;
 
 import java.util.HashMap;
@@ -26,7 +27,7 @@ public class ProgramLoader {
         if (programCache.containsKey(shaderParam)) {
             return programCache.get(shaderParam);
         }
-        Resources resources = GLEngine.getAppContext().getResources();
+        Resources resources = GLEngineFactory.getAppContext().getResources();
         String vertexSource = ShaderUtils.loadFromAssetsFile(shaderParam.getVertexAsset(), resources);
         String fragSource = ShaderUtils.loadFromAssetsFile(shaderParam.getFragAsset(), resources);
 

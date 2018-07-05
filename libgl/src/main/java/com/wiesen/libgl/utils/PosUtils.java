@@ -10,43 +10,43 @@ import com.wiesen.libgl.view.GlViewPort;
  * time : 2018/6/28
  */
 public class PosUtils {
+    private GlViewPort glViewPort;
 
-    public static PointF toGlPos(PointF pointF){
+    public PosUtils(GlViewPort glViewPort) {
+        this.glViewPort = glViewPort;
+    }
+
+    public PointF toGlPos(PointF pointF){
         pointF.x = toGlX(pointF.x);
         pointF.y = toGlY((pointF.y));
         return pointF;
     }
 
-    public static PointF toScreenPos(PointF pointF){
+    public PointF toScreenPos(PointF pointF){
         pointF.x = toViewX(pointF.x);
         pointF.y = toViewY(pointF.y);
         return pointF;
     }
 
-    public static float toGlX(float sx){
-        GlViewPort viewPort = GLEngine.getViewPort();
-        float rx = sx / viewPort.getViewWidth();
-        return -viewPort.getGlRateW() + rx * 2 * viewPort.getGlRateW();
+    public float toGlX(float sx){
+        float rx = sx / glViewPort.getViewWidth();
+        return -glViewPort.getGlRateW() + rx * 2 * glViewPort.getGlRateW();
     }
 
-    public static float toGlY(float sy){
-        GlViewPort viewPort = GLEngine.getViewPort();
-        float ry = sy / viewPort.getViewHeight();
-        return viewPort.getGlRateH() - ry * 2 * viewPort.getGlRateH();
+    public float toGlY(float sy){
+        float ry = sy / glViewPort.getViewHeight();
+        return glViewPort.getGlRateH() - ry * 2 * glViewPort.getGlRateH();
     }
 
-    public static float toViewX(float gx){
-        GlViewPort viewPort = GLEngine.getViewPort();
-        return (gx + viewPort.getGlRateW()) * viewPort.getViewWidth() / (2 * viewPort.getGlRateW());
+    public float toViewX(float gx){
+        return (gx + glViewPort.getGlRateW()) * glViewPort.getViewWidth() / (2 * glViewPort.getGlRateW());
     }
 
-    public static float toViewY(float gy){
-        GlViewPort viewPort = GLEngine.getViewPort();
-        return (viewPort.getGlRateH() - gy) * viewPort.getViewHeight() / (2 * viewPort.getGlRateH());
+    public float toViewY(float gy){
+        return (glViewPort.getGlRateH() - gy) * glViewPort.getViewHeight() / (2 * glViewPort.getGlRateH());
     }
 
-    public static float toGlSize(float screenSize){
-        GlViewPort viewPort = GLEngine.getViewPort();
-        return screenSize / viewPort.getViewHeight() * 2 * viewPort.getGlRateH();
+    public float toGlSize(float screenSize){
+        return screenSize / glViewPort.getViewHeight() * 2 * glViewPort.getGlRateH();
     }
 }

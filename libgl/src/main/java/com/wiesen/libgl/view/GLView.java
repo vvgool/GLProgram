@@ -12,6 +12,7 @@ import com.wiesen.libgl.shader.TextureLoader;
  * time : 2018/6/28
  */
 public class GLView extends GLSurfaceView {
+    private Renderer glRender;
 
     public GLView(Context context) {
         super(context);
@@ -21,10 +22,17 @@ public class GLView extends GLSurfaceView {
         super(context, attrs);
     }
 
-
+    @Override
+    public void setRenderer(Renderer renderer) {
+        super.setRenderer(renderer);
+        this.glRender = renderer;
+    }
 
     @Override
     protected void onDetachedFromWindow() {
+        if (glRender != null && glRender instanceof GLRender){
+            ((GLRender) glRender).release();
+        }
         super.onDetachedFromWindow();
         ProgramLoader.releaseProgramSource();
         TextureLoader.releaseTextureSource();

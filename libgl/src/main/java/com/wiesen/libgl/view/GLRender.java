@@ -4,6 +4,7 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 
 import com.wiesen.libgl.factory.GLEngine;
+import com.wiesen.libgl.factory.GLEngineFactory;
 import com.wiesen.libgl.utils.FpsUtils;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -27,21 +28,28 @@ public class GLRender implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
-        GLEngine.viewPort(width, height);
+        glEngine().viewPort(width, height);
         GLES20.glViewport(0, 0, width, height);
-        GLEngine.getMatrixState().setInitStack();
+        glEngine().getMatrixState().setInitStack();
     }
 
     @Override
     public void onDrawFrame(GL10 gl) {
-        if (GLEngine.isFPSOpen()){
-            FpsUtils.count(GLEngine.getGlEngine().getFpsListener());
+        if (glEngine().isOpenFPS()){
+            FpsUtils.count(glEngine().getFpsListener());
         }
 
     }
 
-
     public void runOnDraw(Runnable runnable){
         glView.queueEvent(runnable);
+    }
+
+    public GLEngine glEngine(){
+        return GLEngineFactory.getGLEngine(this);
+    }
+
+    public void release(){
+        GLEngineFactory.releaseGLEngine(this);
     }
 }

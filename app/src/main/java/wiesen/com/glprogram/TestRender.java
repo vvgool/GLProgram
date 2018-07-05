@@ -1,9 +1,8 @@
 package wiesen.com.glprogram;
 
-import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 
-import com.wiesen.libgl.factory.GLEngine;
+import com.wiesen.libgl.factory.GLEngineFactory;
 import com.wiesen.libgl.shader.TextureLoader;
 import com.wiesen.libgl.sprite2d.Particle.ParticleParamParser;
 import com.wiesen.libgl.sprite2d.Particle.ParticleParams;
@@ -11,7 +10,6 @@ import com.wiesen.libgl.sprite2d.Particle.ParticleSprite;
 import com.wiesen.libgl.sprite2d.Particle.ParticleSystem;
 import com.wiesen.libgl.sprite2d.Sprite;
 import com.wiesen.libgl.texture.GLTexture;
-import com.wiesen.libgl.utils.TextureUtils;
 import com.wiesen.libgl.view.GLRender;
 import com.wiesen.libgl.view.GLView;
 import com.wiesen.libgl.view.GlViewPort;
@@ -44,14 +42,14 @@ public class TestRender extends GLRender {
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         super.onSurfaceChanged(gl, width, height);
-        GlViewPort viewPort = GLEngine.getViewPort();
-        GLEngine.getMatrixState().setProjectOrtho(-viewPort.getGlRateW(),
+        GlViewPort viewPort = glEngine().getViewPort();
+        glEngine().getMatrixState().setProjectOrtho(-viewPort.getGlRateW(),
                 viewPort.getGlRateW(), -viewPort.getGlRateH(), viewPort.getGlRateH(), 0, 100);
-        GLEngine.getMatrixState().setCamera(0, 0, 20f, 0, 0, 0, 0, 1, 0);
+        glEngine().getMatrixState().setCamera(0, 0, 20f, 0, 0, 0, 0, 1, 0);
         glTexture = TextureLoader.loadTextureFromRes(R.drawable.ic_launcher);
-        ParticleParams particleParams = ParticleParamParser.parserPlist(GLEngine.getAppContext().getResources(), "atom.plist");
-        particleSystem = new ParticleSystem(new ParticleSprite(), particleParams);
-        sprite = new Sprite();
+        ParticleParams particleParams = ParticleParamParser.parserPlist(GLEngineFactory.getAppContext().getResources(), "atom.plist");
+        particleSystem = new ParticleSystem(new ParticleSprite(glEngine()), particleParams);
+        sprite = new Sprite(glEngine());
     }
 
     @Override

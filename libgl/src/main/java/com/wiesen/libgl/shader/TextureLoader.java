@@ -8,6 +8,7 @@ import com.wiesen.libgl.data.AtlasFilter;
 import com.wiesen.libgl.data.AtlasFormat;
 import com.wiesen.libgl.data.AtlasWrap;
 import com.wiesen.libgl.factory.GLEngine;
+import com.wiesen.libgl.factory.GLEngineFactory;
 import com.wiesen.libgl.texture.GLTexture;
 import com.wiesen.libgl.utils.FileUtils;
 import com.wiesen.libgl.utils.TextureUtils;
@@ -29,7 +30,7 @@ public class TextureLoader {
         if (resTextures.containsKey(resId)){
             return resTextures.get(resId);
         }
-        Bitmap bitmap = BitmapFactory.decodeResource(GLEngine.getAppContext().getResources(), resId);
+        Bitmap bitmap = BitmapFactory.decodeResource(GLEngineFactory.getAppContext().getResources(), resId);
         if (bitmap == null) {
             bitmap = Bitmap.createBitmap(2, 2, Bitmap.Config.ARGB_8888);
             resId = 0;
@@ -45,7 +46,7 @@ public class TextureLoader {
         if (resFormatTextures.containsKey(resId)){
             return resFormatTextures.get(resId);
         }
-        Bitmap bitmap = BitmapFactory.decodeResource(GLEngine.getAppContext().getResources(), resId);
+        Bitmap bitmap = BitmapFactory.decodeResource(GLEngineFactory.getAppContext().getResources(), resId);
         if (bitmap == null) {
             bitmap = Bitmap.createBitmap(2, 2, Bitmap.Config.ARGB_8888);
             resId = 0;
@@ -59,7 +60,7 @@ public class TextureLoader {
         if (urlTextures.containsKey(assetPath)){
             return urlTextures.get(assetPath);
         }
-        byte[] bytes = FileUtils.getByteFromAssetsFile(assetPath, GLEngine.getAppContext().getResources());
+        byte[] bytes = FileUtils.getByteFromAssetsFile(assetPath, GLEngineFactory.getAppContext().getResources());
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         GLTexture glTexture = TextureUtils.iniTexture(bitmap);
         urlTextures.put(assetPath, glTexture);
@@ -72,7 +73,7 @@ public class TextureLoader {
         if (urlFormatTextures.containsKey(assetPath)){
             return urlFormatTextures.get(assetPath);
         }
-        byte[] bytes = FileUtils.getByteFromAssetsFile(assetPath, GLEngine.getAppContext().getResources());
+        byte[] bytes = FileUtils.getByteFromAssetsFile(assetPath, GLEngineFactory.getAppContext().getResources());
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         GLTexture glTexture = TextureUtils.initGlTexture(bitmap, format, minFilter, magFilter, uWrap, vWrap);
         urlFormatTextures.put(assetPath, glTexture);

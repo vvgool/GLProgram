@@ -1,10 +1,9 @@
 package com.wiesen.libgl.factory;
 
-import android.app.Application;
 
 import com.wiesen.libgl.data.FpsListener;
-import com.wiesen.libgl.utils.FpsUtils;
 import com.wiesen.libgl.utils.MatrixState;
+import com.wiesen.libgl.utils.PosUtils;
 import com.wiesen.libgl.view.GlViewPort;
 
 /**
@@ -12,63 +11,41 @@ import com.wiesen.libgl.view.GlViewPort;
  * time : 2018/6/28
  */
 public class GLEngine {
-    private volatile static GLEngine glEngine;
-    private static Application context;
     private MatrixState matrixState = new MatrixState();
     private GlViewPort viewPort = new GlViewPort();
     private boolean openFPS = false;
     private FpsListener fpsListener;
+    private PosUtils posUtils = new PosUtils(viewPort);
 
-    public static void init(Application application){
-        context = application;
+    public void setOpenFPS(boolean openFPS) {
+        this.openFPS = openFPS;
     }
 
-
-    public static Application getAppContext() {
-        return context;
+    public void setFpsListener(FpsListener fpsListener) {
+        this.fpsListener = fpsListener;
     }
 
-    public static void openFPS(boolean state){
-        getGlEngine().openFPS = state;
+    public MatrixState getMatrixState() {
+        return matrixState;
     }
 
-    public static boolean isFPSOpen(){
-        return getGlEngine().openFPS;
+    public GlViewPort getViewPort() {
+        return viewPort;
+    }
+
+    public boolean isOpenFPS() {
+        return openFPS;
     }
 
     public FpsListener getFpsListener() {
         return fpsListener;
     }
 
-    public static void registerFps(FpsListener listener){
-        getGlEngine().fpsListener = listener;
+    public PosUtils getPosUtils() {
+        return posUtils;
     }
 
-    public static void viewPort(float width, float height){
-        getGlEngine().viewPort.initViewPort(width, height);
+    public void viewPort(float width, float height){
+        viewPort.initViewPort(width, height);
     }
-
-    public static GlViewPort getViewPort() {
-        return getGlEngine().viewPort;
-    }
-
-    public static MatrixState getMatrixState(){
-        return getGlEngine().matrixState;
-    }
-
-    public static void setMatrixState(MatrixState matrixState){
-        getGlEngine().matrixState = matrixState;
-    }
-
-    public static GLEngine getGlEngine() {
-        if (glEngine == null){
-            synchronized (GLEngine.class) {
-                if (glEngine == null) {
-                    glEngine = new GLEngine();
-                }
-            }
-        }
-        return glEngine;
-    }
-
 }
