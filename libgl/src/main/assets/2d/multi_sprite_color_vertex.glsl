@@ -1,7 +1,7 @@
 uniform mat4 uMVPMatrix; //总变换矩阵
 attribute vec3 aPosition;  //顶点位置
 attribute vec2 aTextureCoord;//顶点纹理坐标
-attribute vec4 aColor;
+uniform vec4 aColor;
 
 varying vec2 vTextureCoord; //传递给片元着色器的纹理坐标
 varying vec3 vPosition; //传递给片元着色器的顶点坐标
