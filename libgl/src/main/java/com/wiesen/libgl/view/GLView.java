@@ -34,6 +34,11 @@ public class GLView extends GLSurfaceView {
             ((GLRender) glRender).release();
         }
         super.onDetachedFromWindow();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
         ProgramLoader.releaseProgramSource();
         TextureLoader.releaseTextureSource();
     }
