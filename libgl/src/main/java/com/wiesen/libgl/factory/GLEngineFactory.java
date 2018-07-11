@@ -3,6 +3,9 @@ package com.wiesen.libgl.factory;
 import android.app.Application;
 
 
+import com.wiesen.libgl.shader.ProgramLoader;
+import com.wiesen.libgl.shader.TextureLoader;
+
 import java.util.HashMap;
 
 /**
@@ -48,6 +51,11 @@ public class GLEngineFactory {
             }
         }
         return glEngineFactory;
+    }
+
+    public static void releaseSource(){
+        TextureLoader.releaseTextureSource();
+        ProgramLoader.releaseProgramSource();
     }
 
 }

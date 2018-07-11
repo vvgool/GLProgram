@@ -4,8 +4,7 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 
-import com.wiesen.libgl.shader.ProgramLoader;
-import com.wiesen.libgl.shader.TextureLoader;
+import com.wiesen.libgl.factory.GLEngineFactory;
 
 /**
  * created by wiesen
@@ -39,7 +38,6 @@ public class GLView extends GLSurfaceView {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        ProgramLoader.releaseProgramSource();
-        TextureLoader.releaseTextureSource();
+        GLEngineFactory.releaseSource();
     }
 }
