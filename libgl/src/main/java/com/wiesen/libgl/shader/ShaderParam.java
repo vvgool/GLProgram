@@ -29,7 +29,7 @@ public class ShaderParam {
         if (obj instanceof ShaderParam){
             ShaderParam shaderParam = (ShaderParam) obj;
             return vertexAsset.equals(shaderParam.vertexAsset) &&
-                    fragAsset.equals(shaderParam.fragAsset) && id ==shaderParam.id;
+                    fragAsset.equals(shaderParam.fragAsset) && id == shaderParam.id;
         }
         return super.equals(obj);
     }

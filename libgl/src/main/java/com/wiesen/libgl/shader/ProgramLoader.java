@@ -3,7 +3,6 @@ package com.wiesen.libgl.shader;
 import android.content.res.Resources;
 import android.opengl.GLES20;
 
-import com.wiesen.libgl.factory.GLEngine;
 import com.wiesen.libgl.factory.GLEngineFactory;
 import com.wiesen.libgl.utils.ShaderUtils;
 
@@ -16,14 +15,14 @@ import java.util.Map;
  * time : 2018/6/28
  */
 public class ProgramLoader {
-    private static HashMap<ShaderParam, Integer> programCache = new HashMap<>();
+    private static volatile HashMap<ShaderParam, Integer> programCache = new HashMap<>();
 
 
-    public static int loadProgramFromAsset(String vertexShader, String fragShader) {
+    public static synchronized int loadProgramFromAsset(String vertexShader, String fragShader) {
         return loadProgramFromAsset(new ShaderParam(vertexShader, fragShader));
     }
 
-    public static int loadProgramFromAsset(ShaderParam shaderParam) {
+    public static synchronized int loadProgramFromAsset(ShaderParam shaderParam) {
         if (programCache.containsKey(shaderParam)) {
             return programCache.get(shaderParam);
         }
@@ -39,7 +38,7 @@ public class ProgramLoader {
     }
 
 
-    public static void releaseProgramSource() {
+    public static synchronized void releaseProgramSource() {
         Iterator<Map.Entry<ShaderParam, Integer>> iterator = programCache.entrySet().iterator();
         while (iterator.hasNext()){
             Integer programId = iterator.next().getValue();

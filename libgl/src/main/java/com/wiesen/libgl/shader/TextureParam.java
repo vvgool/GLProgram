@@ -1,12 +1,14 @@
 package com.wiesen.libgl.shader;
 
+import android.text.TextUtils;
+
 /**
  * created by wiesen
  * time : 2018/7/14
  */
 public class TextureParam {
-    private int resId;
-    private String path = "";
+    private int resId = -1;
+    private String path;
     private long id = Thread.currentThread().getId();
 
 
@@ -23,14 +25,14 @@ public class TextureParam {
         if (obj instanceof TextureParam){
             TextureParam textureParam = (TextureParam) obj;
             return resId ==  textureParam.resId&&
-                    path.equals(textureParam.path) && id ==textureParam.id;
+                    TextUtils.equals(textureParam.path, path) && id == textureParam.id;
         }
         return super.equals(obj);
     }
 
     @Override
     public int hashCode() {
-        return path.hashCode() + resId + (int)id;
+        return (path != null ? path.hashCode() : 0) + resId + (int)id;
     }
 
     public boolean equal(int resId){
@@ -38,7 +40,7 @@ public class TextureParam {
     }
 
     public boolean equal(String path){
-        return this.path.equals(path) && id == Thread.currentThread().getId();
+        return TextUtils.equals(this.path, path) && id == Thread.currentThread().getId();
     }
 
     public boolean isSameThread(){

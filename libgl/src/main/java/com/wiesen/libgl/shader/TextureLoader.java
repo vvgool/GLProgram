@@ -19,11 +19,11 @@ import java.util.HashMap;
  * time : 2018/6/29
  */
 public class TextureLoader {
-    private static HashMap<TextureParam, GLTexture> textures = new HashMap<>();
-    private static HashMap<TextureParam, GLTexture> formatTextures = new HashMap<>();
+    private static volatile HashMap<TextureParam, GLTexture> textures = new HashMap<>();
+    private static volatile HashMap<TextureParam, GLTexture> formatTextures = new HashMap<>();
 
 
-    public static GLTexture loadTextureFromRes(@DrawableRes int resId){
+    public static synchronized GLTexture loadTextureFromRes(@DrawableRes int resId){
         TextureParam textureParam = containsKey(resId);
         if (textureParam != null){
             return textures.get(textureParam);
@@ -38,9 +38,9 @@ public class TextureLoader {
         return glTexture;
     }
 
-    public static GLTexture loadTextureFromRes(@DrawableRes int resId, AtlasFormat format,
-                                               AtlasFilter minFilter, AtlasFilter magFilter,
-                                               AtlasWrap uWrap, AtlasWrap vWrap){
+    public static synchronized GLTexture loadTextureFromRes(@DrawableRes int resId, AtlasFormat format,
+                                                            AtlasFilter minFilter, AtlasFilter magFilter,
+                                                            AtlasWrap uWrap, AtlasWrap vWrap){
         TextureParam textureParam = containsFormatKey(resId);
         if (textureParam != null){
             return formatTextures.get(textureParam);
@@ -55,7 +55,7 @@ public class TextureLoader {
         return glTexture;
     }
 
-    public static GLTexture loadTextureFromAsset(String assetPath){
+    public static synchronized GLTexture loadTextureFromAsset(String assetPath){
         TextureParam textureParam = containsKey(assetPath);
         if (textureParam != null){
             return textures.get(textureParam);
@@ -67,9 +67,9 @@ public class TextureLoader {
         return glTexture;
     }
 
-    public static GLTexture loadTextureFromAsset(String assetPath, AtlasFormat format,
-                                                 AtlasFilter minFilter, AtlasFilter magFilter,
-                                                 AtlasWrap uWrap, AtlasWrap vWrap){
+    public static synchronized GLTexture loadTextureFromAsset(String assetPath, AtlasFormat format,
+                                                              AtlasFilter minFilter, AtlasFilter magFilter,
+                                                              AtlasWrap uWrap, AtlasWrap vWrap){
         TextureParam textureParam = containsFormatKey(assetPath);
         if (textureParam != null){
             return formatTextures.get(textureParam);
@@ -81,7 +81,7 @@ public class TextureLoader {
         return glTexture;
     }
 
-    public static GLTexture loadTextureFromFile(String path){
+    public static synchronized GLTexture loadTextureFromFile(String path){
         TextureParam textureParam = containsKey(path);
         if (textureParam != null){
             return textures.get(textureParam);
@@ -92,9 +92,9 @@ public class TextureLoader {
         return glTexture;
     }
 
-    public static GLTexture loadTextureFromFile(String path, AtlasFormat format,
-                                                AtlasFilter minFilter, AtlasFilter magFilter,
-                                                AtlasWrap uWrap, AtlasWrap vWrap){
+    public static synchronized GLTexture loadTextureFromFile(String path, AtlasFormat format,
+                                                             AtlasFilter minFilter, AtlasFilter magFilter,
+                                                             AtlasWrap uWrap, AtlasWrap vWrap){
         TextureParam textureParam = containsFormatKey(path);
         if (textureParam != null){
             return formatTextures.get(textureParam);
@@ -105,7 +105,7 @@ public class TextureLoader {
         return glTexture;
     }
 
-    private static TextureParam containsKey(int resId){
+    private static synchronized TextureParam containsKey(int resId){
         for (TextureParam textureParam : textures.keySet()) {
             if (textureParam.equal(resId)){
                 return textureParam;
@@ -114,7 +114,7 @@ public class TextureLoader {
         return null;
     }
 
-    private static TextureParam containsKey(String path){
+    private static synchronized TextureParam containsKey(String path){
         for (TextureParam textureParam : textures.keySet()) {
             if (textureParam.equal(path)){
                 return textureParam;
@@ -123,7 +123,7 @@ public class TextureLoader {
         return null;
     }
 
-    private static TextureParam containsFormatKey(int resId){
+    private static synchronized TextureParam containsFormatKey(int resId){
         for (TextureParam textureParam : formatTextures.keySet()) {
             if (textureParam.equal(resId)){
                 return textureParam;
@@ -132,7 +132,7 @@ public class TextureLoader {
         return null;
     }
 
-    private static TextureParam containsFormatKey(String path){
+    private static synchronized TextureParam containsFormatKey(String path){
         for (TextureParam textureParam : formatTextures.keySet()) {
             if (textureParam.equal(path)){
                 return textureParam;
@@ -141,7 +141,7 @@ public class TextureLoader {
         return null;
     }
 
-    public static void releaseTextureSource(){
+    public static synchronized void releaseTextureSource(){
         textures.clear();
         formatTextures.clear();
     }

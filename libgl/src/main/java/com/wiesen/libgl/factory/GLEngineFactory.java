@@ -2,7 +2,6 @@ package com.wiesen.libgl.factory;
 
 import android.app.Application;
 
-
 import com.wiesen.libgl.shader.ProgramLoader;
 import com.wiesen.libgl.shader.TextureLoader;
 
@@ -15,7 +14,7 @@ import java.util.HashMap;
 public class GLEngineFactory {
     private volatile static GLEngineFactory glEngineFactory;
     private static Application context;
-    private HashMap<Object, GLEngine> glEngines = new HashMap<>();
+    private volatile HashMap<Object, GLEngine> glEngines = new HashMap<>();
 
     public static void init(Application application){
         context = application;
@@ -25,7 +24,7 @@ public class GLEngineFactory {
         return context;
     }
 
-    public static GLEngine getGLEngine(){
+    public static synchronized GLEngine getGLEngine(){
         long tag = Thread.currentThread().getId();
         if (getGlEngineFactory().glEngines.containsKey(tag)){
             return getGlEngineFactory().glEngines.get(tag);
@@ -35,7 +34,7 @@ public class GLEngineFactory {
         return glEngine;
     }
 
-    public static void releaseGLEngine(){
+    public static synchronized void releaseGLEngine(){
         long tag = Thread.currentThread().getId();
         if (getGlEngineFactory().glEngines.containsKey(tag)){
             getGlEngineFactory().glEngines.remove(tag);
@@ -44,7 +43,7 @@ public class GLEngineFactory {
 
 
 
-    private static GLEngineFactory getGlEngineFactory() {
+    private static synchronized GLEngineFactory getGlEngineFactory() {
         if (glEngineFactory == null){
             synchronized (GLEngineFactory.class) {
                 if (glEngineFactory == null) {
@@ -55,7 +54,7 @@ public class GLEngineFactory {
         return glEngineFactory;
     }
 
-    public static void releaseSource(){
+    public static synchronized void releaseSource(){
         TextureLoader.releaseTextureSource();
         ProgramLoader.releaseProgramSource();
     }
