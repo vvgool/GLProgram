@@ -2,7 +2,6 @@ package com.wiesen.libgl.sprite2d;
 
 import android.opengl.GLES20;
 
-import com.wiesen.libgl.factory.GLEngine;
 import com.wiesen.libgl.shader.ProgramLoader;
 import com.wiesen.libgl.shader.ShaderContacts;
 import com.wiesen.libgl.texture.GLTexture;
@@ -30,12 +29,12 @@ public class Sprite extends GlNode {
     private ShortBuffer indexBuffer;
     private boolean needAlpha = false;
 
-    public Sprite(GLEngine glEngine) {
-        super(glEngine);
+    public Sprite() {
+        super();
     }
 
-    public Sprite(GLEngine glEngine, boolean needAlpha) {
-        super(glEngine);
+    public Sprite(boolean needAlpha) {
+        super();
         this.needAlpha = needAlpha;
     }
 

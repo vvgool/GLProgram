@@ -7,6 +7,7 @@ package com.wiesen.libgl.shader;
 public class ShaderParam {
     private String vertexAsset;
     private String fragAsset;
+    private long id = Thread.currentThread().getId();
 
 
     public ShaderParam(String vertexAsset, String fragAsset) {
@@ -28,13 +29,13 @@ public class ShaderParam {
         if (obj instanceof ShaderParam){
             ShaderParam shaderParam = (ShaderParam) obj;
             return vertexAsset.equals(shaderParam.vertexAsset) &&
-                    fragAsset.equals(shaderParam.fragAsset);
+                    fragAsset.equals(shaderParam.fragAsset) && id ==shaderParam.id;
         }
         return super.equals(obj);
     }
 
     @Override
     public int hashCode() {
-        return vertexAsset.hashCode() + fragAsset.hashCode();
+        return vertexAsset.hashCode() + fragAsset.hashCode() + (int)id;
     }
 }

@@ -38,6 +38,5 @@ public class GLView extends GLSurfaceView {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        GLEngineFactory.releaseSource();
     }
 }

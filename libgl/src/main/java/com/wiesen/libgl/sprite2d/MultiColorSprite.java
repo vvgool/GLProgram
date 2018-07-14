@@ -2,7 +2,6 @@ package com.wiesen.libgl.sprite2d;
 
 import android.opengl.GLES20;
 
-import com.wiesen.libgl.factory.GLEngine;
 import com.wiesen.libgl.shader.ProgramLoader;
 import com.wiesen.libgl.shader.ShaderContacts;
 import com.wiesen.libgl.texture.GLTexture;
@@ -40,8 +39,8 @@ public class MultiColorSprite extends GlNode {
 
     private int[] mTexHandlerArray;
 
-    public MultiColorSprite(GLEngine glEngine) {
-        super(glEngine);
+    public MultiColorSprite() {
+        super();
     }
 
     @Override

@@ -25,7 +25,8 @@ public class GLEngineFactory {
         return context;
     }
 
-    public static GLEngine getGLEngine(Object tag){
+    public static GLEngine getGLEngine(){
+        long tag = Thread.currentThread().getId();
         if (getGlEngineFactory().glEngines.containsKey(tag)){
             return getGlEngineFactory().glEngines.get(tag);
         }
@@ -34,7 +35,8 @@ public class GLEngineFactory {
         return glEngine;
     }
 
-    public static void releaseGLEngine(Object tag){
+    public static void releaseGLEngine(){
+        long tag = Thread.currentThread().getId();
         if (getGlEngineFactory().glEngines.containsKey(tag)){
             getGlEngineFactory().glEngines.remove(tag);
         }
@@ -42,7 +44,7 @@ public class GLEngineFactory {
 
 
 
-    public static GLEngineFactory getGlEngineFactory() {
+    private static GLEngineFactory getGlEngineFactory() {
         if (glEngineFactory == null){
             synchronized (GLEngineFactory.class) {
                 if (glEngineFactory == null) {

@@ -46,10 +46,16 @@ public class GLRender implements GLSurfaceView.Renderer {
     }
 
     public GLEngine glEngine(){
-        return GLEngineFactory.getGLEngine(this);
+        return GLEngineFactory.getGLEngine();
     }
 
     public void release(){
-        GLEngineFactory.releaseGLEngine(this);
+        runOnDraw(new Runnable() {
+            @Override
+            public void run() {
+                GLEngineFactory.releaseGLEngine();
+                GLEngineFactory.releaseSource();
+            }
+        });
     }
 }

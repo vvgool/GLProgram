@@ -2,7 +2,6 @@ package com.wiesen.libgl.sprite2d.Particle;
 
 import android.opengl.GLES20;
 
-import com.wiesen.libgl.factory.GLEngine;
 import com.wiesen.libgl.shader.ProgramLoader;
 import com.wiesen.libgl.shader.ShaderContacts;
 import com.wiesen.libgl.sprite2d.GlNode;
@@ -32,8 +31,8 @@ public class ParticleSprite extends GlNode{
     private int iCount;
 
 
-    public ParticleSprite(GLEngine glEngine) {
-        super(glEngine);
+    public ParticleSprite() {
+        super();
     }
 
 

@@ -1,6 +1,7 @@
 package wiesen.com.glprogram;
 
 import android.opengl.GLES20;
+import android.util.Log;
 
 import com.wiesen.libgl.factory.GLEngineFactory;
 import com.wiesen.libgl.shader.TextureLoader;
@@ -47,9 +48,11 @@ public class TestRender extends GLRender {
                 viewPort.getGlRateW(), -viewPort.getGlRateH(), viewPort.getGlRateH(), 0, 100);
         glEngine().getMatrixState().setCamera(0, 0, 20f, 0, 0, 0, 0, 1, 0);
         glTexture = TextureLoader.loadTextureFromRes(R.drawable.ic_launcher);
+        glTexture = TextureLoader.loadTextureFromRes(R.drawable.ic_launcher);
         ParticleParams particleParams = ParticleParamParser.parserPlist(GLEngineFactory.getAppContext().getResources(), "atom.plist");
-        particleSystem = new ParticleSystem(new ParticleSprite(glEngine()), particleParams);
-        sprite = new Sprite(glEngine());
+        particleSystem = new ParticleSystem(new ParticleSprite(), particleParams);
+        sprite = new Sprite();
+        Log.i("wiesen","threadId:" + Thread.currentThread().getId());
     }
 
     @Override

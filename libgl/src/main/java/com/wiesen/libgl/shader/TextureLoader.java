@@ -7,7 +7,6 @@ import android.support.annotation.DrawableRes;
 import com.wiesen.libgl.data.AtlasFilter;
 import com.wiesen.libgl.data.AtlasFormat;
 import com.wiesen.libgl.data.AtlasWrap;
-import com.wiesen.libgl.factory.GLEngine;
 import com.wiesen.libgl.factory.GLEngineFactory;
 import com.wiesen.libgl.texture.GLTexture;
 import com.wiesen.libgl.utils.FileUtils;
@@ -20,15 +19,14 @@ import java.util.HashMap;
  * time : 2018/6/29
  */
 public class TextureLoader {
-    private static HashMap<Integer, GLTexture> resTextures = new HashMap<>();
-    private static HashMap<Integer, GLTexture> resFormatTextures = new HashMap<>();
-    private static HashMap<String, GLTexture> urlTextures = new HashMap<>();
-    private static HashMap<String, GLTexture> urlFormatTextures = new HashMap<>();
+    private static HashMap<TextureParam, GLTexture> textures = new HashMap<>();
+    private static HashMap<TextureParam, GLTexture> formatTextures = new HashMap<>();
 
 
     public static GLTexture loadTextureFromRes(@DrawableRes int resId){
-        if (resTextures.containsKey(resId)){
-            return resTextures.get(resId);
+        TextureParam textureParam = containsKey(resId);
+        if (textureParam != null){
+            return textures.get(textureParam);
         }
         Bitmap bitmap = BitmapFactory.decodeResource(GLEngineFactory.getAppContext().getResources(), resId);
         if (bitmap == null) {
@@ -36,15 +34,16 @@ public class TextureLoader {
             resId = 0;
         }
         GLTexture glTexture = TextureUtils.iniTexture(bitmap);
-        resTextures.put(resId, glTexture);
+        textures.put(new TextureParam(resId), glTexture);
         return glTexture;
     }
 
     public static GLTexture loadTextureFromRes(@DrawableRes int resId, AtlasFormat format,
                                                AtlasFilter minFilter, AtlasFilter magFilter,
                                                AtlasWrap uWrap, AtlasWrap vWrap){
-        if (resFormatTextures.containsKey(resId)){
-            return resFormatTextures.get(resId);
+        TextureParam textureParam = containsFormatKey(resId);
+        if (textureParam != null){
+            return formatTextures.get(textureParam);
         }
         Bitmap bitmap = BitmapFactory.decodeResource(GLEngineFactory.getAppContext().getResources(), resId);
         if (bitmap == null) {
@@ -52,61 +51,99 @@ public class TextureLoader {
             resId = 0;
         }
         GLTexture glTexture = TextureUtils.initGlTexture(bitmap, format, minFilter, magFilter, uWrap, vWrap);
-        resFormatTextures.put(resId, glTexture);
+        formatTextures.put(new TextureParam(resId), glTexture);
         return glTexture;
     }
 
     public static GLTexture loadTextureFromAsset(String assetPath){
-        if (urlTextures.containsKey(assetPath)){
-            return urlTextures.get(assetPath);
+        TextureParam textureParam = containsKey(assetPath);
+        if (textureParam != null){
+            return textures.get(textureParam);
         }
         byte[] bytes = FileUtils.getByteFromAssetsFile(assetPath, GLEngineFactory.getAppContext().getResources());
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         GLTexture glTexture = TextureUtils.iniTexture(bitmap);
-        urlTextures.put(assetPath, glTexture);
+        textures.put(new TextureParam(assetPath), glTexture);
         return glTexture;
     }
 
     public static GLTexture loadTextureFromAsset(String assetPath, AtlasFormat format,
                                                  AtlasFilter minFilter, AtlasFilter magFilter,
                                                  AtlasWrap uWrap, AtlasWrap vWrap){
-        if (urlFormatTextures.containsKey(assetPath)){
-            return urlFormatTextures.get(assetPath);
+        TextureParam textureParam = containsFormatKey(assetPath);
+        if (textureParam != null){
+            return formatTextures.get(textureParam);
         }
         byte[] bytes = FileUtils.getByteFromAssetsFile(assetPath, GLEngineFactory.getAppContext().getResources());
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         GLTexture glTexture = TextureUtils.initGlTexture(bitmap, format, minFilter, magFilter, uWrap, vWrap);
-        urlFormatTextures.put(assetPath, glTexture);
+        formatTextures.put(new TextureParam(assetPath), glTexture);
         return glTexture;
     }
 
     public static GLTexture loadTextureFromFile(String path){
-        if (urlTextures.containsKey(path)){
-            return urlTextures.get(path);
+        TextureParam textureParam = containsKey(path);
+        if (textureParam != null){
+            return textures.get(textureParam);
         }
         Bitmap bitmap = BitmapFactory.decodeFile(path);
         GLTexture glTexture = TextureUtils.iniTexture(bitmap);
-        urlTextures.put(path, glTexture);
+        textures.put(new TextureParam(path), glTexture);
         return glTexture;
     }
 
     public static GLTexture loadTextureFromFile(String path, AtlasFormat format,
                                                 AtlasFilter minFilter, AtlasFilter magFilter,
                                                 AtlasWrap uWrap, AtlasWrap vWrap){
-        if (urlFormatTextures.containsKey(path)){
-            return urlFormatTextures.get(path);
+        TextureParam textureParam = containsFormatKey(path);
+        if (textureParam != null){
+            return formatTextures.get(textureParam);
         }
         Bitmap bitmap = BitmapFactory.decodeFile(path);
         GLTexture glTexture = TextureUtils.initGlTexture(bitmap, format, minFilter, magFilter, uWrap, vWrap);
-        urlFormatTextures.put(path, glTexture);
+        formatTextures.put(new TextureParam(path), glTexture);
         return glTexture;
     }
 
+    private static TextureParam containsKey(int resId){
+        for (TextureParam textureParam : textures.keySet()) {
+            if (textureParam.equal(resId)){
+                return textureParam;
+            }
+        }
+        return null;
+    }
+
+    private static TextureParam containsKey(String path){
+        for (TextureParam textureParam : textures.keySet()) {
+            if (textureParam.equal(path)){
+                return textureParam;
+            }
+        }
+        return null;
+    }
+
+    private static TextureParam containsFormatKey(int resId){
+        for (TextureParam textureParam : formatTextures.keySet()) {
+            if (textureParam.equal(resId)){
+                return textureParam;
+            }
+        }
+        return null;
+    }
+
+    private static TextureParam containsFormatKey(String path){
+        for (TextureParam textureParam : formatTextures.keySet()) {
+            if (textureParam.equal(path)){
+                return textureParam;
+            }
+        }
+        return null;
+    }
 
     public static void releaseTextureSource(){
-        resTextures.clear();
-        resFormatTextures.clear();
-        urlTextures.clear();
-        urlFormatTextures.clear();
+        textures.clear();
+        formatTextures.clear();
     }
+
 }
