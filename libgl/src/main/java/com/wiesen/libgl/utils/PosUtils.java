@@ -2,7 +2,6 @@ package com.wiesen.libgl.utils;
 
 import android.graphics.PointF;
 
-import com.wiesen.libgl.factory.GLEngine;
 import com.wiesen.libgl.view.GlViewPort;
 
 /**

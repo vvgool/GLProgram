@@ -4,8 +4,6 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 
-import com.wiesen.libgl.factory.GLEngineFactory;
-
 /**
  * created by wiesen
  * time : 2018/6/28
