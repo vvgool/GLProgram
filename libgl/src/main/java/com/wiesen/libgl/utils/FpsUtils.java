@@ -2,6 +2,8 @@ package com.wiesen.libgl.utils;
 
 import com.wiesen.libgl.data.FpsListener;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * created by wiesen
  * time : 2018/6/30
@@ -18,7 +20,7 @@ public class FpsUtils {
             frameCount = 0;
             long CTM = System.nanoTime();
             if (lCTM > 0) {
-                long dt = CTM - lCTM;
+                long dt = TimeUnit.NANOSECONDS.toMillis(CTM - lCTM);
                 fps = 1000.0f / (dt / 100f);
                 if (call != null) call.onFpsChange(fps);
             }
