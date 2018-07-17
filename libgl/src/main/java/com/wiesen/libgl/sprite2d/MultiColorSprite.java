@@ -123,6 +123,7 @@ public class MultiColorSprite extends GlNode {
 
     public void setDefaultTextureCood(){
         float[] textureArray = getTextureArray();
+        if (textureArray == null) return;
         for (int i = 0; i < textureArray.length ; i += 8) {
             textureArray[i] = 0;
             textureArray[i + 1] = 0;
@@ -160,6 +161,7 @@ public class MultiColorSprite extends GlNode {
 
 
     public void drawSelf(GLTexture[] glTextures) {
+        if (vertexBuffer == null || textureBuffer == null) return;
         GLES20.glUseProgram(mProgram);
         GLES20.glUniformMatrix4fv(muMVPMatrixHandler, 1, false, glEngine().getMatrixState().getFinalMatrix(), 0);
         if (colorBuffer != null) GLES20.glUniform4fv(maColorHandler, 1, colorBuffer);
@@ -174,6 +176,7 @@ public class MultiColorSprite extends GlNode {
     }
 
     public void drawSelf(int[] textureIds){
+        if (vertexBuffer == null || textureBuffer == null) return;
         GLES20.glUseProgram(mProgram);
         GLES20.glUniformMatrix4fv(muMVPMatrixHandler, 1, false, glEngine().getMatrixState().getFinalMatrix(), 0);
         if (colorBuffer != null) GLES20.glUniform4fv(maColorHandler, 1, colorBuffer);

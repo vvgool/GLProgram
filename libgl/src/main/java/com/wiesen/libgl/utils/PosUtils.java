@@ -48,4 +48,8 @@ public class PosUtils {
     public float toGlSize(float screenSize){
         return screenSize / glViewPort.getViewHeight() * 2 * glViewPort.getGlRateH();
     }
+
+    public float toViewSize(float glSize){
+        return glSize / (glViewPort.getGlRateH() * 2) * glViewPort.getViewHeight();
+    }
 }

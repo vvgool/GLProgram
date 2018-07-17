@@ -42,8 +42,8 @@ public class MultiSprite extends GlNode {
     }
 
     public MultiSprite(boolean needAlpha){
-        super();
         this.needAlpha = needAlpha;
+        initShader();
     }
 
     @Override
@@ -111,6 +111,7 @@ public class MultiSprite extends GlNode {
     @Override
     public void setDefaultTextureCood(){
         float[] textureArray = getTextureArray();
+        if (textureArray == null) return;
         for (int i = 0; i < textureArray.length ; i += 8) {
             textureArray[i] = 0;
             textureArray[i + 1] = 0;
@@ -154,6 +155,7 @@ public class MultiSprite extends GlNode {
 
 
     public void drawSelf(GLTexture[] glTextures) {
+        if (vertexBuffer == null || textureBuffer == null) return;
         GLES20.glUseProgram(mProgram);
         GLES20.glUniformMatrix4fv(muMVPMatrixHandler, 1, false, glEngine().getMatrixState().getFinalMatrix(), 0);
 
@@ -167,6 +169,7 @@ public class MultiSprite extends GlNode {
     }
 
     public void drawSelf(int[] textureIds){
+        if (vertexBuffer == null || textureBuffer == null) return;
         GLES20.glUseProgram(mProgram);
         GLES20.glUniformMatrix4fv(muMVPMatrixHandler, 1, false, glEngine().getMatrixState().getFinalMatrix(), 0);
 

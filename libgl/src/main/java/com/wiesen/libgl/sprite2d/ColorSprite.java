@@ -12,13 +12,14 @@ import java.nio.ShortBuffer;
 
 /**
  * created by wiesen
- * time : 2018/6/29
+ * time : 2018/7/16
  */
-public class Sprite extends GlNode {
+public class ColorSprite extends GlNode {
     private int mProgram;
     private int muMVPMatrixHandler;
     private int maPositionHandler;
     private int maTextureCoordHandler;
+    private int maColorHandler;
 
     private int mSpriteCount;
     private int iCount;//索引数量
@@ -27,24 +28,22 @@ public class Sprite extends GlNode {
     private FloatBuffer vertexBuffer;
     private float[] vertexArray;
     private ShortBuffer indexBuffer;
-    private boolean needAlpha = false;
+    private float[] colorArray;
+    private FloatBuffer colorBuffer;
 
-    public Sprite() {
+    public ColorSprite() {
         super();
     }
 
-    public Sprite(boolean needAlpha) {
-        this.needAlpha = needAlpha;
-        initShader();
-    }
 
     @Override
     public void initShader(){
-        mProgram = ProgramLoader.loadProgramFromAsset(ShaderContacts.NORMAL_SPRITE_VERTEX,
-                !needAlpha ? ShaderContacts.NORMAL_SPRITE_FRAG : ShaderContacts.NORMAL_SPRITE_ALPHA_FRAG);
+        mProgram = ProgramLoader.loadProgramFromAsset(ShaderContacts.NORMAL_COLOR_SPRITE_VERTEX,
+                ShaderContacts.NORMAL_COLOR_SPRITE_FRAG);
         muMVPMatrixHandler = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
         maPositionHandler = GLES20.glGetAttribLocation(mProgram, "aPosition");
         maTextureCoordHandler = GLES20.glGetAttribLocation(mProgram, "aTextureCoord");
+        maColorHandler = GLES20.glGetAttribLocation(mProgram, "aColor");
     }
 
     @Override
@@ -54,6 +53,7 @@ public class Sprite extends GlNode {
             int vCount = spriteCount * 4;
             initVertex(vCount);
             initTexture(vCount);
+            initColor(vCount);
             initIndex(spriteCount);
         }
         this.mSpriteCount = spriteCount;
@@ -62,6 +62,11 @@ public class Sprite extends GlNode {
     private void initVertex(int count){
         vertexArray = new float[count * 3];
         vertexBuffer = BufferUtil.covertBuffer(vertexArray);
+    }
+
+    private void initColor(int count){
+        colorArray = new float[count * 3];
+        colorBuffer = BufferUtil.covertBuffer(colorArray);
     }
 
     private void initTexture(int count){
@@ -77,6 +82,10 @@ public class Sprite extends GlNode {
     @Override
     public float[] getTextureArray(){
         return textureArray;
+    }
+
+    public float[] getColorArray(){
+        return colorArray;
     }
 
     private void initIndex(int count){
@@ -100,6 +109,8 @@ public class Sprite extends GlNode {
         indexBuffer.put(shorts);
         indexBuffer.position(0);
     }
+
+
 
     @Override
     public void setDefaultTextureCood(){
@@ -145,17 +156,17 @@ public class Sprite extends GlNode {
     }
 
     public void drawSelf(int textureId) {
-        if (vertexBuffer == null || textureBuffer == null) return;
+        if (vertexBuffer == null || textureBuffer == null || colorBuffer == null) return;
         GLES20.glUseProgram(mProgram);
         GLES20.glUniformMatrix4fv(muMVPMatrixHandler, 1, false, glEngine().getMatrixState().getFinalMatrix(), 0);
         GLES20.glVertexAttribPointer(maPositionHandler, 3, GLES20.GL_FLOAT, false, 3 * 4, vertexBuffer);
         GLES20.glVertexAttribPointer(maTextureCoordHandler, 2, GLES20.GL_FLOAT, false, 2 * 4, textureBuffer);
+        GLES20.glVertexAttribPointer(maColorHandler, 3, GLES20.GL_FLOAT, false, 3 * 4, colorBuffer);
         GLES20.glEnableVertexAttribArray(maPositionHandler);
         GLES20.glEnableVertexAttribArray(maTextureCoordHandler);
+        GLES20.glEnableVertexAttribArray(maColorHandler);
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
         GLES20.glDrawElements(GLES20.GL_TRIANGLES, iCount, GLES20.GL_UNSIGNED_SHORT, indexBuffer);
     }
-
-
 }

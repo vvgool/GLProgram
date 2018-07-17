@@ -52,6 +52,7 @@ public class MultiPointSprite {
 
 
     public void drawSelf(int[] textureIds, float radius){
+        if (vertexBuffer == null) return;
         GLES20.glUseProgram(mProgram);
         GLES20.glUniformMatrix4fv(muMVPMatrixHandler, 1, false, glEngine().getMatrixState().getFinalMatrix(), 0);
         GLES20.glVertexAttribPointer(maPositionHandler, 3, GLES20.GL_FLOAT, false, 3 * 4, vertexBuffer);
@@ -62,6 +63,7 @@ public class MultiPointSprite {
     }
 
     public void drawSelf(GLTexture[] glTextures, float radius){
+        if (vertexBuffer == null) return;
         GLES20.glUseProgram(mProgram);
         GLES20.glUniformMatrix4fv(muMVPMatrixHandler, 1, false, glEngine().getMatrixState().getFinalMatrix(), 0);
         GLES20.glVertexAttribPointer(maPositionHandler, 3, GLES20.GL_FLOAT, false, 3 * 4, vertexBuffer);
