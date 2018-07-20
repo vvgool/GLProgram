@@ -151,6 +151,14 @@ public class ColorSprite extends GlNode {
         textureBuffer.position(0);
     }
 
+    public void refreshColorBuffer(){
+        if (colorArray == null ||
+                colorBuffer == null) return;
+        colorBuffer.clear();
+        colorBuffer.put(colorArray);
+        colorBuffer.position(0);
+    }
+
     public void drawSelf(GLTexture texture) {
         drawSelf(texture.getTextureId());
     }

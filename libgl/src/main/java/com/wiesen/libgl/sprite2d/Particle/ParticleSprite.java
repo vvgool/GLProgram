@@ -14,7 +14,7 @@ import java.nio.ShortBuffer;
  * created by wiesen
  * time : 2018/5/22
  */
-public class ParticleSprite extends GlNode{
+public class ParticleSprite extends GlNode {
     private int mMatrixHandler;
     private int mTextureHandler;
     private int mPositionHandler;

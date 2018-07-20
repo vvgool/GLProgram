@@ -15,7 +15,7 @@ import java.nio.FloatBuffer;
  * created by wiesen
  * time : 2018/7/16
  */
-public class PointSprite{
+public class PointSprite {
     private int mProgram;
     private int muMVPMatrixHandler;
     private int maPositionHandler;
