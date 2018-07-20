@@ -33,7 +33,7 @@ public class TextureLoader {
             bitmap = Bitmap.createBitmap(2, 2, Bitmap.Config.ARGB_8888);
             resId = 0;
         }
-        GLTexture glTexture = TextureUtils.iniTexture(bitmap);
+        GLTexture glTexture = TextureUtils.initGlTexture(bitmap);
         textures.put(new TextureParam(resId), glTexture);
         return glTexture;
     }
@@ -62,7 +62,7 @@ public class TextureLoader {
         }
         byte[] bytes = FileUtils.getByteFromAssetsFile(assetPath, GLEngineFactory.getAppContext().getResources());
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        GLTexture glTexture = TextureUtils.iniTexture(bitmap);
+        GLTexture glTexture = TextureUtils.initGlTexture(bitmap);
         textures.put(new TextureParam(assetPath), glTexture);
         return glTexture;
     }
@@ -87,7 +87,7 @@ public class TextureLoader {
             return textures.get(textureParam);
         }
         Bitmap bitmap = BitmapFactory.decodeFile(path);
-        GLTexture glTexture = TextureUtils.iniTexture(bitmap);
+        GLTexture glTexture = TextureUtils.initGlTexture(bitmap);
         textures.put(new TextureParam(path), glTexture);
         return glTexture;
     }

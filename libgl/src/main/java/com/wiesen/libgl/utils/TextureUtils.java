@@ -34,7 +34,7 @@ public class TextureUtils {
         return textureId;
     }
 
-    public static GLTexture iniTexture(Bitmap bitmap) {
+    public static GLTexture initGlTexture(Bitmap bitmap) {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
         return new GLTexture(initTexture(bitmap), width, height);
@@ -63,8 +63,8 @@ public class TextureUtils {
 
 
     public static GLTexture initGlTexture(Bitmap bitmap, AtlasFormat format,
-                                  AtlasFilter minFilter, AtlasFilter magFilter,
-                                  AtlasWrap uWrap, AtlasWrap vWrap){
+                                          AtlasFilter minFilter, AtlasFilter magFilter,
+                                          AtlasWrap uWrap, AtlasWrap vWrap){
         float width = bitmap.getWidth();
         float height = bitmap.getHeight();
 

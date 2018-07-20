@@ -16,6 +16,7 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public class GLRender implements GLSurfaceView.Renderer {
     private GLView glView;
+    private GLEngine glEngine;
 
     public GLRender(GLView glView) {
         this.glView = glView;
@@ -28,6 +29,7 @@ public class GLRender implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
+        glEngine = GLEngineFactory.getGLEngine();
         glEngine().viewPort(width, height);
         GLES20.glViewport(0, 0, width, height);
         glEngine().getMatrixState().setInitStack();
@@ -46,16 +48,12 @@ public class GLRender implements GLSurfaceView.Renderer {
     }
 
     public GLEngine glEngine(){
-        return GLEngineFactory.getGLEngine();
+        if (glEngine == null) return GLEngineFactory.getGLEngine();
+        return glEngine;
     }
 
     public void release(){
-        runOnDraw(new Runnable() {
-            @Override
-            public void run() {
-                GLEngineFactory.releaseGLEngine();
-                GLEngineFactory.releaseSource();
-            }
-        });
+        GLEngineFactory.releaseGLEngine(glEngine);
+        GLEngineFactory.releaseSource();
     }
 }

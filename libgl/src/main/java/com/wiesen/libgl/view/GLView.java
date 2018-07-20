@@ -4,11 +4,14 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 
+import com.wiesen.libgl.factory.GLEngineFactory;
+
 /**
  * created by wiesen
  * time : 2018/6/28
  */
 public class GLView extends GLSurfaceView {
+    private static int glCount = 0;
     private Renderer glRender;
 
     public GLView(Context context) {
@@ -31,10 +34,13 @@ public class GLView extends GLSurfaceView {
             ((GLRender) glRender).release();
         }
         super.onDetachedFromWindow();
+        glCount--;
+        if (glCount == 0) GLEngineFactory.releaseAllEngine();
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+        glCount++;
     }
 }

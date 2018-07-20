@@ -6,6 +6,7 @@ import com.wiesen.libgl.shader.ProgramLoader;
 import com.wiesen.libgl.shader.TextureLoader;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * created by wiesen
@@ -34,14 +35,19 @@ public class GLEngineFactory {
         return glEngine;
     }
 
-    public static synchronized void releaseGLEngine(){
-        long tag = Thread.currentThread().getId();
-        if (getGlEngineFactory().glEngines.containsKey(tag)){
-            getGlEngineFactory().glEngines.remove(tag);
+    public static synchronized void releaseGLEngine(GLEngine glEngine){
+        HashMap<Object, GLEngine> glEngines = getGlEngineFactory().glEngines;
+        if (glEngines.containsValue(glEngine)){
+            Iterator<GLEngine> iterator = glEngines.values().iterator();
+            while (iterator.hasNext()){
+                if (glEngine == iterator.next()) iterator.remove();
+            }
         }
     }
 
-
+    public static synchronized  void releaseAllEngine(){
+        getGlEngineFactory().glEngines.clear();
+    }
 
     private static synchronized GLEngineFactory getGlEngineFactory() {
         if (glEngineFactory == null){
