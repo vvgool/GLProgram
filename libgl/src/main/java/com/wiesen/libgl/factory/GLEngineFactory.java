@@ -37,11 +37,10 @@ public class GLEngineFactory {
 
     public static synchronized void releaseGLEngine(GLEngine glEngine){
         HashMap<Object, GLEngine> glEngines = getGlEngineFactory().glEngines;
-        if (glEngines.containsValue(glEngine)){
-            Iterator<GLEngine> iterator = glEngines.values().iterator();
-            while (iterator.hasNext()){
-                if (glEngine == iterator.next()) iterator.remove();
-            }
+        if (glEngine == null || glEngines.size() <= 0) return;
+        Iterator<GLEngine> iterator = glEngines.values().iterator();
+        while (iterator.hasNext()) {
+            if (glEngine == iterator.next()) iterator.remove();
         }
     }
 

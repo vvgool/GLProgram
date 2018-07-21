@@ -29,7 +29,6 @@ public class GLRender implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
-        glEngine = GLEngineFactory.getGLEngine();
         glEngine().viewPort(width, height);
         GLES20.glViewport(0, 0, width, height);
         glEngine().getMatrixState().setInitStack();
@@ -48,7 +47,7 @@ public class GLRender implements GLSurfaceView.Renderer {
     }
 
     public GLEngine glEngine(){
-        if (glEngine == null) return GLEngineFactory.getGLEngine();
+        if (glEngine == null || !glEngine.isAvailable()) glEngine = GLEngineFactory.getGLEngine();
         return glEngine;
     }
 

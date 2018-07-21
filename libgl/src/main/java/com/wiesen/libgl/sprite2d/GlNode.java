@@ -8,6 +8,7 @@ import com.wiesen.libgl.factory.GLEngineFactory;
  * time : 2018/6/29
  */
 public abstract class GlNode {
+    private GLEngine glEngine;
 
     public GlNode() {
         initShader();
@@ -29,7 +30,8 @@ public abstract class GlNode {
     public abstract void setDefaultTextureCood();
 
     public GLEngine glEngine(){
-        return GLEngineFactory.getGLEngine();
+        if (glEngine == null || !glEngine.isAvailable()) glEngine = GLEngineFactory.getGLEngine();
+        return glEngine;
     }
 
 }

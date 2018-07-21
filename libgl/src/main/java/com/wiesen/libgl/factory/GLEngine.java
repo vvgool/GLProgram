@@ -48,4 +48,8 @@ public class GLEngine {
     public void viewPort(float width, float height){
         viewPort.initViewPort(width, height);
     }
+
+    public boolean isAvailable(){
+        return viewPort.getRate() != 0;
+    }
 }

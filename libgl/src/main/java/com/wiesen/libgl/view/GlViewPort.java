@@ -30,6 +30,10 @@ public class GlViewPort {
         return glRateH;
     }
 
+    public float getRate() {
+        return rate;
+    }
+
     public float getViewWidth() {
         return viewWidth;
     }
