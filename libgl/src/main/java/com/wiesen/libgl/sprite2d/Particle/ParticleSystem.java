@@ -3,7 +3,6 @@ package com.wiesen.libgl.sprite2d.Particle;
 import android.graphics.PointF;
 import android.text.TextUtils;
 
-
 import com.wiesen.libgl.utils.TextureUtils;
 
 import java.util.ArrayList;

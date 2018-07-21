@@ -16,7 +16,7 @@ import java.nio.FloatBuffer;
  * time : 2018/7/16
  */
 public class MultiPointSprite {
-
+    private GLEngine glEngine;
     private int mProgram;
     private int muMVPMatrixHandler;
     private int maPositionHandler;
@@ -116,6 +116,7 @@ public class MultiPointSprite {
     }
 
     public GLEngine glEngine(){
-        return GLEngineFactory.getGLEngine();
+        if (glEngine == null || !glEngine.isAvailable()) glEngine = GLEngineFactory.getGLEngine();
+        return glEngine;
     }
 }

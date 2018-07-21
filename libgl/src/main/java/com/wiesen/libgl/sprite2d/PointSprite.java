@@ -24,6 +24,7 @@ public class PointSprite {
     private int mSpriteCount;
     private FloatBuffer vertexBuffer;
     private float[] vertexArray;
+    private GLEngine glEngine;
 
     public PointSprite() {
         initShader();
@@ -62,11 +63,6 @@ public class PointSprite {
         this.mSpriteCount = spriteCount;
     }
 
-    private void initVertex(int count){
-        vertexArray = new float[count * 3];
-        vertexBuffer = BufferUtil.covertBuffer(vertexArray);
-    }
-
     public void refreshVertexBuffer() {
         if (vertexArray == null ||
                 vertexBuffer == null) return;
@@ -75,12 +71,18 @@ public class PointSprite {
         vertexBuffer.position(0);
     }
 
+    private void initVertex(int count){
+        vertexArray = new float[count * 3];
+        vertexBuffer = BufferUtil.covertBuffer(vertexArray);
+    }
+
     public float[] getVertexArray(){
         return vertexArray;
     }
 
     public GLEngine glEngine(){
-        return GLEngineFactory.getGLEngine();
+        if (glEngine == null || !glEngine.isAvailable()) glEngine = GLEngineFactory.getGLEngine();
+        return glEngine;
     }
 
 }
