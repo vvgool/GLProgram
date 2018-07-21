@@ -1,0 +1,34 @@
+
+xy.png
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+qiang01
+  rotate: false
+  xy: 2, 70
+  size: 606, 387
+  orig: 606, 387
+  offset: 0, 0
+  index: -1
+shen01
+  rotate: false
+  xy: 610, 2
+  size: 501, 455
+  orig: 501, 455
+  offset: 0, 0
+  index: -1
+wei01
+  rotate: false
+  xy: 1113, 121
+  size: 214, 336
+  orig: 214, 336
+  offset: 0, 0
+  index: -1
+youshou01
+  rotate: false
+  xy: 1329, 334
+  size: 128, 123
+  orig: 128, 123
+  offset: 0, 0
+  index: -1

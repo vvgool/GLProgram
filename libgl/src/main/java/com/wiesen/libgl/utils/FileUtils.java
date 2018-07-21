@@ -60,5 +60,25 @@ public class FileUtils {
         return content.toString();
     }
 
+    public static String loadFromAssetsFileReplaceN(String fname, Resources resources){
+        String result = null;
+        try {
+            InputStream open = resources.getAssets().open(fname);
+            int temp = 0;
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            while ((temp = open.read()) != -1){
+                baos.write(temp);
+            }
+            baos.close();
+            open.close();
+            byte[] buf = baos.toByteArray();
+            result = new String(buf, "utf-8");
+            result = result.replaceAll("\\r\\n", "\n");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 
 }

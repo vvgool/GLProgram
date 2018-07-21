@@ -26,6 +26,7 @@ public class TestRender extends GLRender {
     private ParticleSystem particleSystem;
     private Sprite sprite;
     private GLTexture glTexture;
+    private SpineTest spineTest;
 
     public TestRender(GLView glView) {
         super(glView);
@@ -52,6 +53,7 @@ public class TestRender extends GLRender {
         ParticleParams particleParams = ParticleParamParser.parserPlist(GLEngineFactory.getAppContext().getResources(), "atom.plist");
         particleSystem = new ParticleSystem(new ParticleSprite(), particleParams);
         sprite = new Sprite();
+        spineTest = new SpineTest(GLEngineFactory.getAppContext());
         Log.i("wiesen","threadId:" + Thread.currentThread().getId());
     }
 
@@ -93,5 +95,6 @@ public class TestRender extends GLRender {
         sprite.refreshVertexBuffer();
         sprite.refreshTextureBuffer();
         sprite.drawSelf(glTexture);
+        spineTest.render();
     }
 }
