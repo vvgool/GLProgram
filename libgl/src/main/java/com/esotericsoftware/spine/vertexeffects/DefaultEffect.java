@@ -17,14 +17,14 @@ public class DefaultEffect implements VertexEffect {
     private float worldX, worldY, angle;
     private PosUtils posUtils;
     private float halfW, halfH;
+    private float scale = 1f;
 
     @Override
     public void begin(Skeleton skeleton) {
         posUtils  = GLEngineFactory.getGLEngine().getPosUtils();
         SkeletonData data = skeleton.getData();
-        float scale = skeleton.getData().getScale();
-        halfW = posUtils.toGlSize(data.getWidth()) * scale / 2;
-        halfH = posUtils.toGlSize(data.getHeight()) * scale / 2;
+        halfW = posUtils.toGlSize(data.getWidth()) / 2;
+        halfH = posUtils.toGlSize(data.getHeight()) / 2;
         worldX = skeleton.getX();
         worldY = skeleton.getY();
     }
@@ -34,8 +34,8 @@ public class DefaultEffect implements VertexEffect {
         position.x = posUtils.toGlSize(position.x) - halfW;
         position.y = posUtils.toGlSize(position.y) - halfH;
 
-        float x = position.x;
-        float y = position.y;
+        float x = position.x * scale;
+        float y = position.y * scale;
         float cos = (float) Math.cos(angle), sin = (float) Math.sin(angle);
         position.x = cos * x - sin * y + worldX;
         position.y = sin * x + cos * y + worldY;
@@ -43,6 +43,10 @@ public class DefaultEffect implements VertexEffect {
 
     public void setAngle(float degrees) {
         this.angle = degrees;
+    }
+
+    public void setScale(float scale){
+        this.scale = scale;
     }
 
     @Override
