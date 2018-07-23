@@ -54,6 +54,7 @@ public class SkeletonData {
 	// Nonessential.
 	float fps = 30;
 	String imagesPath;
+	float scale = 1f;
 
 	// --- Bones.
 
@@ -293,6 +294,10 @@ public class SkeletonData {
 	public void setFps (float fps) {
 		this.fps = fps;
 	}
+
+	public float getScale(){
+	    return scale;
+    }
 
 	public String toString () {
 		return name != null ? name : super.toString();

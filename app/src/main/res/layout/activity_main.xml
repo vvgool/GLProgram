@@ -20,9 +20,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <wiesen.com.glprogram.TestGlView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="200dp"/>
 
 </android.support.constraint.ConstraintLayout>

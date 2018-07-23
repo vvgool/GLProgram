@@ -39,7 +39,6 @@ import com.esotericsoftware.spine.include.utils.NumberUtils;
 import com.wiesen.libgl.shader.ProgramLoader;
 import com.wiesen.libgl.sprite2d.GlNode;
 import com.wiesen.libgl.utils.BufferUtil;
-import com.wiesen.libgl.utils.PosUtils;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
@@ -254,10 +253,9 @@ public class TwoColorPolygonBatch extends GlNode{
         float[] vertexArray = getVertexArray();
         float[] textureArray = getTextureArray();
         float[] darkArray = getDarkArray();
-        PosUtils posUtils = glEngine().getPosUtils();
         for (int index = 0, v = 0, t = 0, l = 0, d = 0; index < spriteCount; index += 6, v += 3, t += 2, l += 4, d += 3) {
-            vertexArray[v] = posUtils.toGlSize(vertices[offset + index]);
-            vertexArray[v + 1] = posUtils.toGlSize(vertices[offset + index + 1]);
+            vertexArray[v] = vertices[offset + index];
+            vertexArray[v + 1] = vertices[offset + index + 1];
             vertexArray[v + 2] = 0;
 
             textureArray[t] = vertices[offset + index + 4];

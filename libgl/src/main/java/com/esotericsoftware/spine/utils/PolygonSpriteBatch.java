@@ -1,6 +1,7 @@
 package com.esotericsoftware.spine.utils;
 
 
+import com.esotericsoftware.spine.SkeletonRenderer;
 import com.esotericsoftware.spine.include.texture.Texture;
 
 
@@ -19,7 +20,7 @@ public class PolygonSpriteBatch extends SpriteBatch {
     public void draw(Texture texture, float[] polygonVertices, int verticesOffset, int verticesCount, short[] polygonTriangles,
                      int trianglesOffset, int trianglesCount) {
         refreshParameters(polygonVertices, verticesOffset, verticesCount);
-        if (trianglesCount > verticesCount) {
+        if (polygonTriangles != SkeletonRenderer.quadTriangles) {
             short[] indexs = new short[trianglesCount];
             int triangleIndex = 0;
             for (int i = trianglesOffset, n = i + trianglesCount; i < n; i++)

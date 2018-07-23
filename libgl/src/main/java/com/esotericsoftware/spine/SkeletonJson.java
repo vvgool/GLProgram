@@ -109,6 +109,7 @@ public class SkeletonJson {
 
 		SkeletonData skeletonData = new SkeletonData();
 		skeletonData.name = name;
+		skeletonData.scale = scale;
 
 		JsonValue root = new JsonReader().parse(json);
 

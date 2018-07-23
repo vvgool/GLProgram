@@ -49,7 +49,7 @@ import com.esotericsoftware.spine.utils.TwoColorPolygonBatch;
 
 
 public class SkeletonRenderer {
-	static private final short[] quadTriangles = {0, 1, 2, 2, 3, 0};
+	public static final short[] quadTriangles = {0, 1, 2, 2, 3, 0};
 
 	private boolean premultipliedAlpha;
 	private final FloatArray vertices = new FloatArray(32);
@@ -61,6 +61,7 @@ public class SkeletonRenderer {
 	private final Color temp4 = new Color();
 	private final Color temp5 = new Color();
 	private final Color temp6 = new Color();
+
 
 	public void draw (SpriteBatch batch, Skeleton skeleton) {
 		VertexEffect vertexEffect = this.vertexEffect;
