@@ -4,6 +4,8 @@ import android.content.res.Resources;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,7 +18,6 @@ public class FileUtils {
 
 
     public static byte[] getByteFromAssetsFile(String fname, Resources resources){
-        String result = null;
         byte[] buf = null;
         try {
             InputStream open = resources.getAssets().open(fname);
@@ -78,6 +79,72 @@ public class FileUtils {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static String loadFromFileReplaceN(String fname){
+        String result = null;
+        try {
+            File file = new File(fname);
+            if (file.exists()){
+                InputStream is = new FileInputStream(file);
+                int temp = 0;
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                while ((temp = is.read()) != -1){
+                    baos.write(temp);
+                }
+                baos.close();
+                is.close();
+                byte[] buf = baos.toByteArray();
+                result = new String(buf, "utf-8");
+                result = result.replaceAll("\\r\\n", "\n");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static String loadFromFile(String fname){
+        String result = null;
+        try {
+            File file = new File(fname);
+            if (file.exists()){
+                InputStream is = new FileInputStream(file);
+                int temp = 0;
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                while ((temp = is.read()) != -1){
+                    baos.write(temp);
+                }
+                baos.close();
+                is.close();
+                byte[] buf = baos.toByteArray();
+                result = new String(buf, "utf-8");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static byte[] getBytesFromFile(String fname){
+        byte[] buf = null;
+        try {
+            File file = new File(fname);
+            if (file.exists()){
+                InputStream is = new FileInputStream(file);
+                int temp = 0;
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                while ((temp = is.read()) != -1){
+                    baos.write(temp);
+                }
+                baos.close();
+                is.close();
+                buf = baos.toByteArray();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return buf;
     }
 
 
