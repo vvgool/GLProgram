@@ -1,6 +1,6 @@
 package com.wiesen.libgl.utils;
 
-import com.wiesen.libgl.data.FpsListener;
+import com.wiesen.libgl.factory.FpsListener;
 
 import java.util.concurrent.TimeUnit;
 

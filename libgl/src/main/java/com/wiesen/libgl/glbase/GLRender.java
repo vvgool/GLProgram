@@ -1,4 +1,4 @@
-package com.wiesen.libgl.view;
+package com.wiesen.libgl.glbase;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;

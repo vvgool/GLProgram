@@ -1,4 +1,4 @@
-package com.wiesen.libgl.shader;
+package com.wiesen.libgl.texture;
 
 import android.text.TextUtils;
 

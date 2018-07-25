@@ -1,4 +1,4 @@
-package com.wiesen.libgl.utils;
+package com.wiesen.libgl.glbase;
 
 import android.opengl.Matrix;
 

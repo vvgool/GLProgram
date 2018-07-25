@@ -63,14 +63,8 @@ public class GLLabel {
     }
 
     public GLTexture buildTexture(){
-        return buildTexture(buildBitmap());
+        return TextureUtils.initGlTexture(buildBitmap());
     }
 
-    public static GLTexture buildTexture(Bitmap bitmap){
-        float width = bitmap.getWidth();
-        float height = bitmap.getHeight();
-        int textureId = TextureUtils.initTexture(bitmap);
-        return new GLTexture(textureId, width, height);
-    }
 
 }

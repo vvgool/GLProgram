@@ -1,4 +1,4 @@
-package com.wiesen.libgl.shader;
+package com.wiesen.libgl.texture;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,7 +8,6 @@ import com.wiesen.libgl.data.AtlasFilter;
 import com.wiesen.libgl.data.AtlasFormat;
 import com.wiesen.libgl.data.AtlasWrap;
 import com.wiesen.libgl.factory.GLEngineFactory;
-import com.wiesen.libgl.texture.GLTexture;
 import com.wiesen.libgl.utils.FileUtils;
 import com.wiesen.libgl.utils.TextureUtils;
 
@@ -18,7 +17,7 @@ import java.util.HashMap;
  * created by wiesen
  * time : 2018/6/29
  */
-public class TextureLoader {
+public class ResourceTextureLoader {
     private static volatile HashMap<TextureParam, GLTexture> textures = new HashMap<>();
     private static volatile HashMap<TextureParam, GLTexture> formatTextures = new HashMap<>();
 

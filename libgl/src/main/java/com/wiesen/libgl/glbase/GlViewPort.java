@@ -1,4 +1,4 @@
-package com.wiesen.libgl.view;
+package com.wiesen.libgl.glbase;
 
 /**
  * created by wiesen

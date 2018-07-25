@@ -3,7 +3,7 @@ package com.wiesen.libgl.factory;
 import android.app.Application;
 
 import com.wiesen.libgl.shader.ProgramLoader;
-import com.wiesen.libgl.shader.TextureLoader;
+import com.wiesen.libgl.texture.ResourceTextureLoader;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -60,7 +60,7 @@ public class GLEngineFactory {
     }
 
     public static synchronized void releaseSource(){
-        TextureLoader.releaseTextureSource();
+        ResourceTextureLoader.releaseTextureSource();
         ProgramLoader.releaseProgramSource();
     }
 

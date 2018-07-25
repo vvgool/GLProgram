@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.util.AttributeSet;
 
-import com.wiesen.libgl.view.GLView;
+import com.wiesen.libgl.glbase.GLView;
 
 /**
  * created by wiesen

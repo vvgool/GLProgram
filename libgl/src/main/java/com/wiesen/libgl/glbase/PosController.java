@@ -1,30 +1,28 @@
-package com.wiesen.libgl.utils;
+package com.wiesen.libgl.glbase;
 
-import android.graphics.PointF;
-
-import com.wiesen.libgl.view.GlViewPort;
+import com.wiesen.libgl.graphics.Vec2;
 
 /**
  * created by wiesen
  * time : 2018/6/28
  */
-public class PosUtils {
+public class PosController {
     private GlViewPort glViewPort;
 
-    public PosUtils(GlViewPort glViewPort) {
+    public PosController(GlViewPort glViewPort) {
         this.glViewPort = glViewPort;
     }
 
-    public PointF toGlPos(PointF pointF){
-        pointF.x = toGlX(pointF.x);
-        pointF.y = toGlY((pointF.y));
-        return pointF;
+    public Vec2 toGlPos(Vec2 vec2){
+        vec2.x = toGlX(vec2.x);
+        vec2.y = toGlY((vec2.y));
+        return vec2;
     }
 
-    public PointF toScreenPos(PointF pointF){
-        pointF.x = toViewX(pointF.x);
-        pointF.y = toViewY(pointF.y);
-        return pointF;
+    public Vec2 toScreenPos(Vec2 vec2){
+        vec2.x = toViewX(vec2.x);
+        vec2.y = toViewY(vec2.y);
+        return vec2;
     }
 
     public float toGlX(float sx){

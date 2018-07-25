@@ -1,4 +1,4 @@
-package com.wiesen.libgl.data;
+package com.wiesen.libgl.factory;
 
 /**
  * created by wiesen

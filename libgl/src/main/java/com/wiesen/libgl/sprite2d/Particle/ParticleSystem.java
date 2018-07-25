@@ -241,7 +241,7 @@ public  class ParticleSystem{
         this.textureId = textureId;
     }
 
-    public void draw(float pointX, float pointY, float sizeRate, float factor, float dir) {
+    public void draw(float pointX, float pointY, float sizeRate, float dir) {
         if (!updateContinue || !isActive) return;
         update(1 / 60f);
         particleSprite.setSpriteCount(particleCount);
@@ -249,7 +249,7 @@ public  class ParticleSystem{
         float[] colorArray = particleSprite.getColorArray();
 
         for (int i = 0; i < particleCount; i++) {
-            updateVertex(i, vertexArray, pointX, pointY, sizeRate, factor, dir, 0f);
+            updateVertex(i, vertexArray, pointX, pointY, sizeRate, dir, 0f);
             updateColor(i, colorArray);
         }
         particleSprite.refreshVertexBuffer();
@@ -258,15 +258,15 @@ public  class ParticleSystem{
     }
 
 
-    private void updateVertex(int index, float[] vertexArray, float pointX, float pointY, float sizeRate, float factor, float dir, float z) {
+    private void updateVertex(int index, float[] vertexArray, float pointX, float pointY, float sizeRate, float dir, float z) {
         ParticleParams.ParticleData particleData = particleDatas.get(index);
         float size_2 = particleData.size * sizeRate;
         float angle = (float) Math.toRadians(particleData.rotation);
         PointF p2 = new PointF(particleData.startPosX, particleData.startPosY);
         p2.x = startPoint.x - p2.x;
         p2.y = startPoint.y - p2.y;
-        float x = particleSprite.glEngine().getPosUtils().toGlSize(particleData.posx - p2.x + startPoint.x);
-        float y = particleSprite.glEngine().getPosUtils().toGlSize(particleData.posy - p2.y + startPoint.y);
+        float x = particleSprite.glEngine().getPosController().toGlSize(particleData.posx - p2.x + startPoint.x);
+        float y = particleSprite.glEngine().getPosController().toGlSize(particleData.posy - p2.y + startPoint.y);
 
         double dis = Math.sqrt(x * x + y * y);
         double tempAngle = Math.atan2(y , x);
@@ -281,14 +281,14 @@ public  class ParticleSystem{
         float x2 = size_2;
         float y2 = size_2;
 
-        float ax = (x1 * cr - y1 * sr + x) * factor;
-        float ay = (x1 * sr + y1 * cr + y) * factor;
-        float bx = (x2 * cr - y1 * sr + x) * factor;
-        float by = (x2 * sr + y1 * cr + y) * factor;
-        float cx = (x2 * cr - y2 * sr + x) * factor;
-        float cy = (x2 * sr + y2 * cr + y) * factor;
-        float dx = (x1 * cr - y2 * sr + x) * factor;
-        float dy = (x1 * sr + y2 * cr + y) * factor;
+        float ax = (x1 * cr - y1 * sr + x);
+        float ay = (x1 * sr + y1 * cr + y);
+        float bx = (x2 * cr - y1 * sr + x);
+        float by = (x2 * sr + y1 * cr + y);
+        float cx = (x2 * cr - y2 * sr + x);
+        float cy = (x2 * sr + y2 * cr + y);
+        float dx = (x1 * cr - y2 * sr + x);
+        float dy = (x1 * sr + y2 * cr + y);
 
         vertexArray[index * 12] = ax;
         vertexArray[index * 12 + 1] = ay;

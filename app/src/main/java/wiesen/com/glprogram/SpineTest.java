@@ -28,8 +28,9 @@ public class SpineTest {
                 "spine/xy.png",
                 "spine/xy.json",
                 "xy");
-        spineRender.setScale(0.5f);
-        spineRender.setAngle((float) Math.PI);
+        spineRender.setScale(0.7f);
+        spineRender.setAngle((float) Math.PI/2);
+        spineRender.setPostion(0f, 0f);
         spineRender.setSpineContent(spineInfoXY);
         AnimationState state = spineRender.getAnimationState();
         if (state != null) {

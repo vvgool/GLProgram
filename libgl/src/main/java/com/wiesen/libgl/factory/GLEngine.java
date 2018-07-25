@@ -1,10 +1,9 @@
 package com.wiesen.libgl.factory;
 
 
-import com.wiesen.libgl.data.FpsListener;
-import com.wiesen.libgl.utils.MatrixState;
-import com.wiesen.libgl.utils.PosUtils;
-import com.wiesen.libgl.view.GlViewPort;
+import com.wiesen.libgl.glbase.MatrixState;
+import com.wiesen.libgl.glbase.PosController;
+import com.wiesen.libgl.glbase.GlViewPort;
 
 /**
  * created by wiesen
@@ -15,7 +14,7 @@ public class GLEngine {
     private GlViewPort viewPort = new GlViewPort();
     private boolean openFPS = false;
     private FpsListener fpsListener;
-    private PosUtils posUtils = new PosUtils(viewPort);
+    private PosController posController = new PosController(viewPort);
 
     public void setOpenFPS(boolean openFPS) {
         this.openFPS = openFPS;
@@ -41,8 +40,8 @@ public class GLEngine {
         return fpsListener;
     }
 
-    public PosUtils getPosUtils() {
-        return posUtils;
+    public PosController getPosController() {
+        return posController;
     }
 
     public void viewPort(float width, float height){
