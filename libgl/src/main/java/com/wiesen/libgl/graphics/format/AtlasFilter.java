@@ -1,4 +1,4 @@
-package com.wiesen.libgl.data;
+package com.wiesen.libgl.graphics.format;
 
 import android.opengl.GLES20;
 

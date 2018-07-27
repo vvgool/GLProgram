@@ -1,5 +1,7 @@
 package com.wiesen.libgl.texture;
 
+import com.wiesen.libgl.graphics.math.Region;
+
 /**
  * created by wiesen
  * time : 2018/6/14
@@ -24,6 +26,11 @@ public class TextureRegion {
     public void setRegion (GLTexture texture, int x, int y, float width, float height) {
         glTexture = texture;
         setRegion(x, y, width, height);
+    }
+
+    public void setRegion(GLTexture texture, Region region){
+        glTexture = texture;
+        setRegion(region.getX(), region.getY(), region.getWidth(), region.getHeight());
     }
 
     public void setRegion(int x, int y, float width, float height){

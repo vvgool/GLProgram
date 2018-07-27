@@ -1,4 +1,4 @@
-package com.wiesen.libgl.graphics;
+package com.wiesen.libgl.graphics.math;
 
 /**
  * created by wiesen

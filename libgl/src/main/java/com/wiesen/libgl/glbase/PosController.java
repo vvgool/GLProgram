@@ -1,6 +1,6 @@
 package com.wiesen.libgl.glbase;
 
-import com.wiesen.libgl.graphics.Vec2;
+import com.wiesen.libgl.graphics.math.Vec2;
 
 /**
  * created by wiesen

@@ -4,9 +4,9 @@ import android.graphics.Bitmap;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 
-import com.wiesen.libgl.data.AtlasFilter;
-import com.wiesen.libgl.data.AtlasFormat;
-import com.wiesen.libgl.data.AtlasWrap;
+import com.wiesen.libgl.graphics.format.AtlasFilter;
+import com.wiesen.libgl.graphics.format.AtlasFormat;
+import com.wiesen.libgl.graphics.format.AtlasWrap;
 import com.wiesen.libgl.texture.GLTexture;
 
 
