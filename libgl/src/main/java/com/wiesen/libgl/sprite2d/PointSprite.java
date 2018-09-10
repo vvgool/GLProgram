@@ -22,6 +22,7 @@ public class PointSprite {
     private int maPointSizeHandler;
 
     private int mSpriteCount;
+    private int iCount;
     private FloatBuffer vertexBuffer;
     private float[] vertexArray;
     private GLEngine glEngine;
@@ -48,7 +49,7 @@ public class PointSprite {
         GLES20.glUniform1f(maPointSizeHandler, radius);
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
-        GLES20.glDrawArrays(GLES20.GL_POINTS, 0, mSpriteCount);
+        GLES20.glDrawArrays(GLES20.GL_POINTS, 0, iCount);
     }
 
     public void drawSelf(GLTexture glTexture, float radius){
@@ -57,10 +58,11 @@ public class PointSprite {
     }
 
     public void setSpriteCount(int spriteCount) {
+        iCount = spriteCount;
         if (spriteCount > mSpriteCount){
-            initVertex(spriteCount);
+            mSpriteCount += spriteCount;
+            initVertex(mSpriteCount);
         }
-        this.mSpriteCount = spriteCount;
     }
 
     public void refreshVertexBuffer() {

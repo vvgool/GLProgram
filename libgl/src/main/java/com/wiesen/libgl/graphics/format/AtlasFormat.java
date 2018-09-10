@@ -7,6 +7,7 @@ import android.opengl.GLES20;
  * time : 2018/6/29
  */
 public enum AtlasFormat {
+    NONE,
     Alpha,
     Intensity,
     LuminanceAlpha,
@@ -29,7 +30,7 @@ public enum AtlasFormat {
             case RGBA4444:
                 return GLES20.GL_RGBA;
             default:
-                return GLES20.GL_RGBA;
+                return -1;
         }
     }
 }

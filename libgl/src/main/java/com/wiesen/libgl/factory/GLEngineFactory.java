@@ -1,21 +1,19 @@
 package com.wiesen.libgl.factory;
 
 import android.app.Application;
+import android.util.LongSparseArray;
 
 import com.wiesen.libgl.shader.ProgramLoader;
 import com.wiesen.libgl.texture.ResourceTextureLoader;
-
-import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * created by wiesen
  * time : 2018/7/5
  */
 public class GLEngineFactory {
-    private volatile static GLEngineFactory glEngineFactory;
+    private static GLEngineFactory glEngineFactory;
     private static Application context;
-    private volatile HashMap<Object, GLEngine> glEngines = new HashMap<>();
+    private final LongSparseArray<GLEngine> glEngines = new LongSparseArray<>();
 
     public static void init(Application application){
         context = application;
@@ -27,7 +25,7 @@ public class GLEngineFactory {
 
     public static synchronized GLEngine getGLEngine(){
         long tag = Thread.currentThread().getId();
-        if (getGlEngineFactory().glEngines.containsKey(tag)){
+        if (getGlEngineFactory().glEngines.indexOfKey(tag) >= 0){
             return getGlEngineFactory().glEngines.get(tag);
         }
         GLEngine glEngine = new GLEngine();
@@ -36,15 +34,15 @@ public class GLEngineFactory {
     }
 
     public static synchronized void releaseGLEngine(GLEngine glEngine){
-        HashMap<Object, GLEngine> glEngines = getGlEngineFactory().glEngines;
+        LongSparseArray<GLEngine> glEngines = getGlEngineFactory().glEngines;
         if (glEngine == null || glEngines.size() <= 0) return;
-        Iterator<GLEngine> iterator = glEngines.values().iterator();
-        while (iterator.hasNext()) {
-            if (glEngine == iterator.next()) iterator.remove();
+        int index = glEngines.indexOfValue(glEngine);
+        if (index >= 0){
+            glEngines.removeAt(index);
         }
     }
 
-    public static synchronized  void releaseAllEngine(){
+    public static synchronized void releaseAllEngine(){
         getGlEngineFactory().glEngines.clear();
     }
 

@@ -134,13 +134,13 @@ public class ParticleSprite extends GlNode {
     public void setSpriteCount(int spriteCount) {
         iCount = spriteCount * 6;
         if (spriteCount > mSpriteCount){
-            int vCount = spriteCount * 4;
+            mSpriteCount += spriteCount;
+            int vCount = mSpriteCount * 4;
             initVertex(vCount);
             initTexture(vCount);
             initColor(vCount);
-            initIndex(spriteCount);
+            initIndex(mSpriteCount);
         }
-        mSpriteCount = spriteCount;
     }
 
     public void refreshTextureBuffer(){

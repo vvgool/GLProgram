@@ -50,13 +50,13 @@ public class ColorSprite extends GlNode {
     public void setSpriteCount(int spriteCount){
         this.iCount = spriteCount * 6;
         if (spriteCount > mSpriteCount){
-            int vCount = spriteCount * 4;
+            mSpriteCount += spriteCount;
+            int vCount = mSpriteCount * 4;
             initVertex(vCount);
             initTexture(vCount);
             initColor(vCount);
-            initIndex(spriteCount);
+            initIndex(mSpriteCount);
         }
-        this.mSpriteCount = spriteCount;
     }
 
     private void initVertex(int count){

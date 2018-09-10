@@ -1,6 +1,7 @@
 package wiesen.com.glprogram;
 
 import android.opengl.GLES20;
+import android.os.Process;
 import android.util.Log;
 
 import com.wiesen.libgl.factory.GLEngineFactory;
@@ -28,8 +29,8 @@ public class TestRender extends GLRender {
     private GLTexture glTexture;
     private SpineTest spineTest;
 
-    public TestRender(GLView glView) {
-        super(glView);
+    public TestRender() {
+        super();
     }
 
     @Override
@@ -61,7 +62,7 @@ public class TestRender extends GLRender {
     public void onDrawFrame(GL10 gl) {
         super.onDrawFrame(gl);
         GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
-        particleSystem.draw(0, 0, 0.002f, 1f, (float) (Math.PI / 4));
+        particleSystem.draw(0, 0, 0.002f, (float) (Math.PI / 4));
         sprite.setSpriteCount(1);
         float[] vertexArray = sprite.getVertexArray();
         vertexArray[0] = -0.2f;

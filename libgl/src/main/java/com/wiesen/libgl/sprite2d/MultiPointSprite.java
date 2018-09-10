@@ -23,6 +23,7 @@ public class MultiPointSprite {
     private int maPointSizeHandler;
 
     private int mSpriteCount;
+    private int iCount;
     private FloatBuffer vertexBuffer;
     private float[] vertexArray;
 
@@ -70,14 +71,15 @@ public class MultiPointSprite {
         GLES20.glEnableVertexAttribArray(maPositionHandler);
         GLES20.glUniform1f(maPointSizeHandler, radius);
         actTexture(glTextures);
-        GLES20.glDrawArrays(GLES20.GL_POINTS, 0, mSpriteCount);
+        GLES20.glDrawArrays(GLES20.GL_POINTS, 0, iCount);
     }
 
     public void setSpriteCount(int spriteCount) {
+        iCount = spriteCount;
         if (spriteCount > mSpriteCount){
-            initVertex(spriteCount);
+            mSpriteCount += spriteCount;
+            initVertex(mSpriteCount);
         }
-        this.mSpriteCount = spriteCount;
     }
 
     private void initVertex(int count){

@@ -4,7 +4,9 @@ import android.opengl.GLES20;
 
 import com.wiesen.libgl.shader.ProgramLoader;
 import com.wiesen.libgl.shader.ShaderContacts;
+import com.wiesen.libgl.sprite2d.base.IMultiNodeDraw;
 import com.wiesen.libgl.texture.GLTexture;
+import com.wiesen.libgl.texture.TextureRegion;
 import com.wiesen.libgl.utils.BufferUtil;
 
 import java.nio.FloatBuffer;
@@ -14,7 +16,7 @@ import java.nio.ShortBuffer;
  * created by wiesen
  * time : 2018/6/29
  */
-public class MultiSprite extends GlNode {
+public class MultiSprite extends GlNode implements IMultiNodeDraw{
 
     private int mProgram;
     private int muMVPMatrixHandler;
@@ -64,12 +66,12 @@ public class MultiSprite extends GlNode {
     public void setSpriteCount(int spriteCount) {
         this.iCount = spriteCount * 6;
         if (spriteCount > mSpriteCount) {
-            int vCount = spriteCount * 4;
+            mSpriteCount += spriteCount;
+            int vCount = mSpriteCount * 4;
             initVertex(vCount);
             initTexture(vCount);
-            initIndex(spriteCount);
+            initIndex(mSpriteCount);
         }
-        this.mSpriteCount = spriteCount;
     }
 
     private void initVertex(int count) {
@@ -168,6 +170,21 @@ public class MultiSprite extends GlNode {
         GLES20.glDrawElements(GLES20.GL_TRIANGLES, iCount, GLES20.GL_UNSIGNED_SHORT, indexBuffer);
     }
 
+    @Override
+    public void drawSelf(TextureRegion[] textureRegions) {
+        if (vertexBuffer == null || textureBuffer == null) return;
+        GLES20.glUseProgram(mProgram);
+        GLES20.glUniformMatrix4fv(muMVPMatrixHandler, 1, false, glEngine().getMatrixState().getFinalMatrix(), 0);
+
+        GLES20.glVertexAttribPointer(maPositionHandler, 3, GLES20.GL_FLOAT, false, 3 * 4, vertexBuffer);
+        GLES20.glVertexAttribPointer(maTextureCoordHandler, 2, GLES20.GL_FLOAT, false, 2 * 4, textureBuffer);
+        GLES20.glEnableVertexAttribArray(maPositionHandler);
+        GLES20.glEnableVertexAttribArray(maTextureCoordHandler);
+
+        actTexture(textureRegions);
+        GLES20.glDrawElements(GLES20.GL_TRIANGLES, iCount, GLES20.GL_UNSIGNED_SHORT, indexBuffer);
+    }
+
     public void drawSelf(int[] textureIds){
         if (vertexBuffer == null || textureBuffer == null) return;
         GLES20.glUseProgram(mProgram);
@@ -181,6 +198,7 @@ public class MultiSprite extends GlNode {
         actTexture(textureIds);
         GLES20.glDrawElements(GLES20.GL_TRIANGLES, iCount, GLES20.GL_UNSIGNED_SHORT, indexBuffer);
     }
+
     private void actTexture(int[] textureIds) {
         for (int i = 0; i < textureIds.length; i++) {
             GLES20.glActiveTexture(mGLTexUnitArray[i]);
@@ -199,5 +217,15 @@ public class MultiSprite extends GlNode {
         }
     }
 
+    private void actTexture(TextureRegion[] textureRegions){
+        for (int i = 0; i < textureRegions.length; i++) {
+            GLES20.glActiveTexture(mGLTexUnitArray[i]);
+            int textureId = 0;
+            if (textureRegions[i] != null &&
+                    textureRegions[i].getGlTexture() != null) textureId = textureRegions[i].getGlTexture().getTextureId();
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
+            GLES20.glUniform1i(mTexHandlerArray[i], i);
+        }
+    }
 
 }

@@ -55,7 +55,8 @@ public class GLLabel {
         int bitmapWidth = (int) Math.ceil(paint.measureText(text));
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
         int bitmapHeight = (int) Math.ceil(fontMetrics.bottom - fontMetrics.top);
-
+        if (bitmapWidth <= 0) bitmapWidth = 1;
+        if (bitmapHeight <= 0) bitmapHeight = 1;
         Bitmap bitmap = Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawText(text, 0, text.length(), 0, -fontMetrics.top, paint);

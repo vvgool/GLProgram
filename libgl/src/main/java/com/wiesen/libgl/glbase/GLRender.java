@@ -15,11 +15,9 @@ import javax.microedition.khronos.opengles.GL10;
  * time : 2018/6/28
  */
 public class GLRender implements GLSurfaceView.Renderer {
-    private GLView glView;
     private GLEngine glEngine;
 
-    public GLRender(GLView glView) {
-        this.glView = glView;
+    public GLRender() {
     }
 
     @Override
@@ -40,10 +38,6 @@ public class GLRender implements GLSurfaceView.Renderer {
             FpsUtils.count(glEngine().getFpsListener());
         }
 
-    }
-
-    public void runOnDraw(Runnable runnable){
-        glView.queueEvent(runnable);
     }
 
     public GLEngine glEngine(){
